@@ -1,15 +1,19 @@
 package com.example.SpringProjectDemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 import java.io.Serializable;
 
 /**
  * (User)实体类
  *
  * @author makejava
- * @since 2021-03-17 15:26:33
+ * @since 2021-05-17 17:02:39
  */
 public class User implements Serializable {
-    private static final long serialVersionUID = 243641949909704234L;
+    private static final long serialVersionUID = 750703543351551398L;
     /**
     * 人员id
     */
@@ -27,9 +31,19 @@ public class User implements Serializable {
     */
     private String password;
     /**
+    * 用户电话
+    */
+    private String phone;
+    /**
     * 用户角色（0-普通用户  1-管理员）
     */
     private Integer userRole;
+    /**
+    * 用户创建时间
+    */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date createTime;
     /**
     * 是否删除（0-未删除   1-删除）
     */
@@ -68,12 +82,28 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public Integer getUserRole() {
         return userRole;
     }
 
     public void setUserRole(Integer userRole) {
         this.userRole = userRole;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Integer getIsDeleted() {

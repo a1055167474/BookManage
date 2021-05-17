@@ -1,6 +1,9 @@
 package com.example.SpringProjectDemo.service;
 
+import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.User;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -9,6 +12,7 @@ import java.util.List;
  * @author makejava
  * @since 2021-03-17 15:26:33
  */
+@Service
 public interface UserService {
 
     /**
@@ -34,7 +38,7 @@ public interface UserService {
      * @param user 实例对象
      * @return 实例对象
      */
-    User insert(User user);
+    Response<?> insert(User user);
 
     /**
      * 修改数据
@@ -42,7 +46,7 @@ public interface UserService {
      * @param user 实例对象
      * @return 实例对象
      */
-    User update(User user);
+    Response<?> update(User user);
 
     /**
      * 通过主键删除数据
@@ -51,5 +55,11 @@ public interface UserService {
      * @return 是否成功
      */
     boolean deleteById(Long id);
+
+
+    /**
+     * @Description: 根据条件查询用户信息
+     */
+    List<User> selectAllUser(User user);
 
 }

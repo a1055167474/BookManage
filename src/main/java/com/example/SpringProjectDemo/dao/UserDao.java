@@ -62,4 +62,12 @@ public interface UserDao {
      */
     int deleteById(Long id);
 
+
+    /**
+     * 根据用户账号获取用户信息
+     * @param account
+     * @return
+     */
+    User getUserByAccount(String account);
+
 }

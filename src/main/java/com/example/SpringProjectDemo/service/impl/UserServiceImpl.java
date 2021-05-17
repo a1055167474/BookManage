@@ -1,8 +1,10 @@
 package com.example.SpringProjectDemo.service.impl;
 
-import com.example.SpringProjectDemo.entity.User;
+import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.dao.UserDao;
+import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.service.UserService;
+import com.example.SpringProjectDemo.utils.ResultUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -49,9 +51,16 @@ public class UserServiceImpl implements UserService {
      * @return 实例对象
      */
     @Override
-    public User insert(User user) {
+    public Response<?> insert(User user) {
+
+        //判断用户的账号是否存在
+        User user1 = userDao.getUserByAccount(user.getAccount());
+        if(user1 != null){
+            return ResultUtils.ResultErrorUtil("此账号已存在！");
+        }
+
         this.userDao.insert(user);
-        return user;
+        return ResultUtils.ResultSuccessUtilMessage(null, "新增用户信息成功");
     }
 
     /**
@@ -61,9 +70,15 @@ public class UserServiceImpl implements UserService {
      * @return 实例对象
      */
     @Override
-    public User update(User user) {
+    public Response<?> update(User user) {
+
+        //判断用户的账号是否存在
+        User user1 = userDao.getUserByAccount(user.getAccount());
+        if(user1 != null){
+            return ResultUtils.ResultErrorUtil("此账号已存在！");
+        }
         this.userDao.update(user);
-        return this.queryById(user.getId());
+        return ResultUtils.ResultSuccessUtilMessage(null, "用户信息更新成功");
     }
 
     /**
@@ -76,4 +91,16 @@ public class UserServiceImpl implements UserService {
     public boolean deleteById(Long id) {
         return this.userDao.deleteById(id) > 0;
     }
+
+    /**
+     * @Description: 根据条件查询用户信息
+     * @Param:
+     * @Author: qinzhibin
+     * @Date: 2021/5/17
+     */
+    @Override
+    public List<User> selectAllUser(User user) {
+        return userDao.queryAll(user);
+    }
+
 }
