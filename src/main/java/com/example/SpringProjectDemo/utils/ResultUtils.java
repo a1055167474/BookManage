@@ -5,7 +5,7 @@ import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.exception.BaseException;
 
 /**
- * @author qinzhibin
+ * @author chenzihan
  * @description 统一封装返回值
  * @date 2021/3/26
  */
@@ -15,7 +15,7 @@ public class ResultUtils {
     /**
      * @Description: 返回错误信息
      * @Param:
-     * @Author: qinzhibin
+     * @Author: chenzihan
      * @Date: 2021/3/26
      */
     public static <T> Response<T> ResultErrorUtil(BaseException e) {
@@ -28,7 +28,7 @@ public class ResultUtils {
     /**
      * @Description: 返回成功对象
      * @Param:
-     * @Author: qinzhibin
+     * @Author: chenzihan
      * @Date: 2021/3/26
      */
     public static <T> Response<T> ResultSuccessUtil(T entity) {
@@ -41,7 +41,7 @@ public class ResultUtils {
     /**
      * @Description: 返回成功对象、信息
      * @Param:
-     * @Author: qinzhibin
+     * @Author: chenzihan
      * @Date: 2021/3/26
      */
     public static <T> Response<T> ResultSuccessUtilMessage(T entity, String message) {
@@ -55,7 +55,7 @@ public class ResultUtils {
     /**
      * @Description: 返回成功对象、信息、数量
      * @Param:
-     * @Author: qinzhibin
+     * @Author: chenzihan
      * @Date: 2021/3/26
      */
     public static <T> Response<T> ResultSuccessUtilMessage(T entity, String message, int total) {
@@ -70,7 +70,7 @@ public class ResultUtils {
     /**
      * @Description: 返回失败信息
      * @Param:
-     * @Author: qinzhibin
+     * @Author: chenzihan
      * @Date: 2021/3/26
      */
     public static <T> Response<T> ResultErrorUtil(String message) {
@@ -83,7 +83,7 @@ public class ResultUtils {
     /**
      * @Description: 返回失败对象、信息
      * @Param:
-     * @Author: qinzhibin
+     * @Author: chenzihan
      * @Date: 2021/3/26
      */
     public static <T> Response<T> ResultErrorUtilObject(T entity, String message) {

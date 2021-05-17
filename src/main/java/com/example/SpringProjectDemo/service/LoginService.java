@@ -1,6 +1,5 @@
 package com.example.SpringProjectDemo.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.User;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * @author qinzhibin
+ * @author chenzihan
  * @description
  * @date 2021/3/31
  */

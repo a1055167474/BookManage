@@ -1,7 +1,7 @@
 package com.example.SpringProjectDemo.common;
 
 /**
- * @author qinzhibin
+ * @author chenzihan
  * @description 常量类
  * @date 2021/3/26
  */

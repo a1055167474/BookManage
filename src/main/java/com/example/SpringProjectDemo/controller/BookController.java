@@ -1,25 +1,25 @@
 package com.example.SpringProjectDemo.controller;
 
-import com.example.SpringProjectDemo.entity.User;
-import com.example.SpringProjectDemo.service.UserService;
+import com.example.SpringProjectDemo.entity.Book;
+import com.example.SpringProjectDemo.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 /**
- * (User)表控制层
+ * (Book)表控制层
  *
  * @author makejava
- * @since 2021-03-17 15:26:34
+ * @since 2021-03-17 15:24:42
  */
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/book")
+public class BookController {
     /**
      * 服务对象
      */
     @Resource
-    private UserService userService;
+    private BookService bookService;
 
     /**
      * 通过主键查询单条数据
@@ -28,8 +28,8 @@ public class UserController {
      * @return 单条数据
      */
     @GetMapping("/selectOne")
-    public User selectOne(Long id) {
-        return this.userService.queryById(id);
+    public Book selectOne(Long id) {
+        return this.bookService.queryById(id);
     }
 
 }

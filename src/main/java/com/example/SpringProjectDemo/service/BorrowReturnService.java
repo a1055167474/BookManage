@@ -1,15 +1,15 @@
 package com.example.SpringProjectDemo.service;
 
-import com.example.SpringProjectDemo.entity.User;
+import com.example.SpringProjectDemo.entity.BorrowReturn;
 import java.util.List;
 
 /**
- * (User)表服务接口
+ * (BorrowReturn)表服务接口
  *
  * @author makejava
- * @since 2021-03-17 15:26:33
+ * @since 2021-03-17 15:25:35
  */
-public interface UserService {
+public interface BorrowReturnService {
 
     /**
      * 通过ID查询单条数据
@@ -17,7 +17,7 @@ public interface UserService {
      * @param id 主键
      * @return 实例对象
      */
-    User queryById(Long id);
+    BorrowReturn queryById(Long id);
 
     /**
      * 查询多条数据
@@ -26,23 +26,23 @@ public interface UserService {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<User> queryAllByLimit(int offset, int limit);
+    List<BorrowReturn> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
      *
-     * @param user 实例对象
+     * @param borrowReturn 实例对象
      * @return 实例对象
      */
-    User insert(User user);
+    BorrowReturn insert(BorrowReturn borrowReturn);
 
     /**
      * 修改数据
      *
-     * @param user 实例对象
+     * @param borrowReturn 实例对象
      * @return 实例对象
      */
-    User update(User user);
+    BorrowReturn update(BorrowReturn borrowReturn);
 
     /**
      * 通过主键删除数据

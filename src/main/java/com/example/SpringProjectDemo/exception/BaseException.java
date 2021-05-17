@@ -1,7 +1,7 @@
 package com.example.SpringProjectDemo.exception;
 
 /**
- * @author qinzhibin
+ * @author chenzihan
  * @description 基础异常类
  * @date 2021/3/26
  */
