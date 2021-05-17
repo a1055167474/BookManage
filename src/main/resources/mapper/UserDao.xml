@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.SpringProjectDemo.dao.UserDao">
+
+    <resultMap id="BaseResultMap" type="com.example.SpringProjectDemo.entity.User">
+        <!--@Table t_user-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userAccount" column="user_account" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="birthDate" column="birth_date" jdbcType="TIMESTAMP"/>
+        <result property="headUrl" column="head_url" jdbcType="VARCHAR"/>
+        <result property="personalSig" column="personal_sig" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_account, password, user_name, phone, email, sex, birth_date, head_url, personal_sig, create_time, is_deleted
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, user_account, password, user_name, phone, email, sex, birth_date, head_url, personal_sig, create_time, is_deleted
+        from springdemo.t_user
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, user_account, password, user_name, phone, email, sex, birth_date, head_url, personal_sig, create_time, is_deleted
+        from springdemo.t_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        id, user_account, password, user_name, phone, email, sex, birth_date, head_url, personal_sig, create_time, is_deleted
+        from springdemo.t_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userAccount != null and userAccount != ''">
+                and user_account = #{userAccount}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="birthDate != null">
+                and birth_date = #{birthDate}
+            </if>
+            <if test="headUrl != null and headUrl != ''">
+                and head_url = #{headUrl}
+            </if>
+            <if test="personalSig != null and personalSig != ''">
+                and personal_sig = #{personalSig}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into t_user(user_account, password, user_name, phone, email, sex, birth_date, head_url, personal_sig, create_time, is_deleted)
+        values (#{userAccount}, #{password}, #{userName}, #{phone}, #{email}, #{sex}, #{birthDate}, #{headUrl}, #{personalSig}, #{createTime}, #{isDeleted})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update springdemo.t_user
+        <set>
+            <if test="userAccount != null and userAccount != ''">
+                user_account = #{userAccount},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="birthDate != null">
+                birth_date = #{birthDate},
+            </if>
+            <if test="headUrl != null and headUrl != ''">
+                head_url = #{headUrl},
+            </if>
+            <if test="personalSig != null and personalSig != ''">
+                personal_sig = #{personalSig},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from springdemo.t_user where id = #{id}
+    </delete>
+
+    <select id="getAllUser" resultType="com.example.SpringProjectDemo.entity.User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM t_user
+     </select>
+
+    <select id="getUserByName" resultMap="BaseResultMap" resultType="com.example.SpringProjectDemo.entity.User">
+        SELECT
+        id, user_account, password, user_name, phone, email, sex, birth_date, head_url, personal_sig, create_time, is_deleted
+        FROM t_user
+        WHERE user_account = #{name}
+    </select>
+
+    <select id="getUserInfoByUserAccount" resultType="com.example.SpringProjectDemo.entity.User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM t_user
+        WHERE user_account = #{userAccount}
+    </select>
+
+</mapper>
