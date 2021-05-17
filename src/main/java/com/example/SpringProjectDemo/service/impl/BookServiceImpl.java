@@ -2,10 +2,12 @@ package com.example.SpringProjectDemo.service.impl;
 
 import com.example.SpringProjectDemo.entity.Book;
 import com.example.SpringProjectDemo.dao.BookDao;
+import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.service.BookService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,7 +52,10 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public Book insert(Book book) {
-        this.bookDao.insert(book);
+        book.setCreateTime(new Date());
+        book.setState(0);
+        book.setIsDeleted(0);
+        bookDao.insert(book);
         return book;
     }
 
@@ -76,4 +81,11 @@ public class BookServiceImpl implements BookService {
     public boolean deleteById(Long id) {
         return this.bookDao.deleteById(id) > 0;
     }
+
+    @Override
+    public List<Book> selectAllBook(Book book) {
+        return bookDao.queryAll(book);
+    }
+
+
 }

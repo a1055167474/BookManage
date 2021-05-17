@@ -116,7 +116,9 @@ public class UserController {
             if(StringUtils.isBlank(user.getPassword())){
                 return ResultUtils.ResultErrorUtil("未获取到用户密码");
             }
-
+            if(user.getUserRole() == null){
+                return ResultUtils.ResultErrorUtil("未获取到用户角色");
+            }
 
             return userService.insert(user);
 

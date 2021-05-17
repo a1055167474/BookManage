@@ -8,6 +8,7 @@ import com.example.SpringProjectDemo.utils.ResultUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,7 +59,8 @@ public class UserServiceImpl implements UserService {
         if(user1 != null){
             return ResultUtils.ResultErrorUtil("此账号已存在！");
         }
-
+        user.setIsDeleted(0);
+        user.setCreateTime(new Date());
         this.userDao.insert(user);
         return ResultUtils.ResultSuccessUtilMessage(null, "新增用户信息成功");
     }
@@ -75,7 +77,9 @@ public class UserServiceImpl implements UserService {
         //判断用户的账号是否存在
         User user1 = userDao.getUserByAccount(user.getAccount());
         if(user1 != null){
-            return ResultUtils.ResultErrorUtil("此账号已存在！");
+            if(!user1.getId().equals(user.getId())) {
+                return ResultUtils.ResultErrorUtil("此账号已存在！");
+            }
         }
         this.userDao.update(user);
         return ResultUtils.ResultSuccessUtilMessage(null, "用户信息更新成功");

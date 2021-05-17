@@ -39,10 +39,10 @@
                 and id = #{id}
             </if>
             <if test="name != null and name != ''">
-                and name = #{name}
+                and name LIKE CONCAT('%',#{name},'%')
             </if>
             <if test="description != null and description != ''">
-                and description = #{description}
+                and description CONCAT('%',#{description},'%')
             </if>
             <if test="amount != null">
                 and amount = #{amount}

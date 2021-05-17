@@ -40,16 +40,13 @@
                 and id = #{id}
             </if>
             <if test="account != null and account != ''">
-                and account = #{account}
+                and account LIKE CONCAT('%',#{account},'%')
             </if>
             <if test="name != null and name != ''">
-                and name = #{name}
-            </if>
-            <if test="password != null and password != ''">
-                and password = #{password}
+                and name LIKE CONCAT('%',#{name},'%')
             </if>
             <if test="phone != null and phone != ''">
-                and phone = #{phone}
+                and phone LIKE CONCAT('%',#{phone},'%')
             </if>
             <if test="userRole != null">
                 and user_role = #{userRole}

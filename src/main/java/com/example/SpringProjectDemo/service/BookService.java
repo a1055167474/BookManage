@@ -52,4 +52,7 @@ public interface BookService {
      */
     boolean deleteById(Long id);
 
+
+    List<Book> selectAllBook(Book book);
+
 }
