@@ -70,4 +70,6 @@ public interface UserDao {
      */
     User getUserByAccount(String account);
 
+
+    User selectByUserId(@Param("userId")Long userId);
 }

@@ -23,11 +23,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        InterceptorRegistration ir = registry.addInterceptor(loginInterceptor);
-        //拦截所有请求
-        ir.addPathPatterns("/**");
-        //配置拦截白名单
-        ir.excludePathPatterns("/login/login");
-        logger.info("------------------开始拦截-----------------------");
+//        InterceptorRegistration ir = registry.addInterceptor(loginInterceptor);
+//        //拦截所有请求
+//        ir.addPathPatterns("/**");
+//        //配置拦截白名单
+//        ir.excludePathPatterns("/login/login");
+//        logger.info("------------------开始拦截-----------------------");
     }
 }

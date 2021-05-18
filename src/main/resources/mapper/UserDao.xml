@@ -107,4 +107,9 @@
         from t_user
         where account = #{account}
     </select>
+    <select id="selectByUserId" resultType="com.example.SpringProjectDemo.entity.User">
+        select id, account, name, password, phone, user_role, create_time, is_deleted
+        from t_user
+        where id = #{userId}
+    </select>
 </mapper>

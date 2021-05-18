@@ -107,4 +107,9 @@ public class UserServiceImpl implements UserService {
         return userDao.queryAll(user);
     }
 
+    @Override
+    public User selectByUserId(Long userId) {
+        return userDao.selectByUserId(userId);
+    }
+
 }

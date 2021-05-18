@@ -62,4 +62,9 @@ public interface UserService {
      */
     List<User> selectAllUser(User user);
 
+    /**
+     * 根据sessionId查询用户信息
+     */
+    User selectByUserId(Long userId);
+
 }
