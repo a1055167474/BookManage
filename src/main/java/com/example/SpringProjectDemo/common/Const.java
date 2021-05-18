@@ -21,11 +21,9 @@ public class Const {
 
     public static final String COOKIE_USER_NAME = "JSESSIONID";
 
-    public static final String COOKIE_OUT_TIME = OptProperties
-            .getPropertyValue(ACTIVE_OPTION, APPLICATION_PROPERTIES, "cookie.out.time");
+    public static final Integer COOKIE_OUT_TIME = 5000;
 
-    public static final String SESSION_OUT_TIME = OptProperties
-            .getPropertyValue(ACTIVE_OPTION, APPLICATION_PROPERTIES, "session.out.time");
+    public static final Integer SESSION_OUT_TIME = 5000;
 
     public static final String SESSION_KEY_HEAD = OptProperties
             .getPropertyValue(ACTIVE_OPTION, APPLICATION_PROPERTIES,"sessionKeyHead");

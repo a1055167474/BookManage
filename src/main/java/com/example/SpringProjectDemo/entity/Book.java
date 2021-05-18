@@ -23,6 +23,10 @@ public class Book implements Serializable {
     */
     private String name;
     /**
+     * 图书作者
+     */
+    private String author;
+    /**
     * 图书描述
     */
     private String description;
@@ -45,6 +49,14 @@ public class Book implements Serializable {
     */
     private Integer isDeleted;
 
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public Long getId() {
         return id;
