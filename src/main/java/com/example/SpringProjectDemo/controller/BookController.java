@@ -4,6 +4,7 @@ import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.Book;
 import com.example.SpringProjectDemo.service.BookService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -82,6 +83,18 @@ public class BookController {
     public Response<?> insertBook(@RequestBody Book book) {
 
         try{
+            if(StringUtils.isBlank(book.getName())){
+                return ResultUtils.ResultErrorUtil("未获取书籍名称");
+            }
+            if(StringUtils.isBlank(book.getAuthor())){
+                return ResultUtils.ResultErrorUtil("未获取到书籍");
+            }
+            if(book.getAmount() == null){
+                return ResultUtils.ResultErrorUtil("未获取到书籍数量");
+            }
+            if(book.getState() == null){
+                return ResultUtils.ResultErrorUtil("未获取到书籍状态");
+            }
             Book book1  =  bookService.insert(book);
 
             return ResultUtils.ResultSuccessUtilMessage(book1,"新增图书信息成功");
@@ -102,6 +115,18 @@ public class BookController {
     public Response<?> updateBook(@RequestBody Book book) {
 
         try{
+            if(StringUtils.isBlank(book.getName())){
+                return ResultUtils.ResultErrorUtil("未获取书籍名称");
+            }
+            if(StringUtils.isBlank(book.getAuthor())){
+                return ResultUtils.ResultErrorUtil("未获取到书籍");
+            }
+            if(book.getAmount() == null){
+                return ResultUtils.ResultErrorUtil("未获取到书籍数量");
+            }
+            if(book.getState() == null){
+                return ResultUtils.ResultErrorUtil("未获取到书籍状态");
+            }
             Book book1  =  bookService.update(book);
 
             return ResultUtils.ResultSuccessUtilMessage(book1,"保存图书信息成功");

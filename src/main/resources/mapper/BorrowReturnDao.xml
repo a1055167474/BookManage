@@ -96,4 +96,11 @@
         delete from t_borrow_return where id = #{id}
     </delete>
 
+    <select id="selectByUserId" resultType="com.example.SpringProjectDemo.entity.BorrowReturn">
+        select id, user_id, book_id, amount, create_time, state, return_time
+        from t_borrow_return
+        where user_id = #{userId}
+        and state = 0
+    </select>
+
 </mapper>

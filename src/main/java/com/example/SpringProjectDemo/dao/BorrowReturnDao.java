@@ -62,4 +62,11 @@ public interface BorrowReturnDao {
      */
     int deleteById(Long id);
 
+    /**
+     * 根据用户Id获取当前用户的借阅记录
+     * @param userId
+     * @return
+     */
+    BorrowReturn selectByUserId(@Param("userId") Long userId);
+
 }

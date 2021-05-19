@@ -3,8 +3,10 @@ package com.example.SpringProjectDemo.controller;
 import com.example.SpringProjectDemo.common.Const;
 import com.example.SpringProjectDemo.dao.SessionDao;
 import com.example.SpringProjectDemo.entity.Session;
+import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.service.LoginService;
 import com.example.SpringProjectDemo.service.SessionService;
+import com.example.SpringProjectDemo.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -24,6 +26,8 @@ import java.util.Date;
 @RestController
 public class BaseController {
 
+    @Resource
+    private UserService userService;
 
     @Autowired
     private SessionService sessionService;
@@ -76,5 +80,33 @@ public class BaseController {
             }
         }
         return null;
+    }
+
+    //根据请求获取当前登录人
+    public User getCurrentUser(HttpServletRequest request){
+        User user = new User();
+
+        Cookie[] cookies = request.getCookies();
+        String sessionId = null;
+        if(cookies == null){
+            return user;
+        }
+        for(Cookie c : cookies){
+            if(c.getName().equals(Const.COOKIE_USER_NAME)){
+                sessionId = c.getValue();
+                break;
+            }
+        }
+        if(StringUtils.isBlank(sessionId)){
+            return user;
+        }
+        //根据sessionId查询当前登录人的信息
+        Session session1 = sessionService.selectBySessionId(sessionId);
+        if(session1 == null){
+            return user;
+        }
+        Long userId = session1.getUserId();
+
+        return userService.selectByUserId(userId);
     }
 }

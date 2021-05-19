@@ -43,10 +43,10 @@
                 and name LIKE CONCAT('%',#{name},'%')
             </if>
             <if test="author != null and author != ''">
-                and author CONCAT('%',#{author},'%')
+                and author LIKE CONCAT('%',#{author},'%')
             </if>
             <if test="description != null and description != ''">
-                and description CONCAT('%',#{description},'%')
+                and description LIKE CONCAT('%',#{description},'%')
             </if>
             <if test="amount != null">
                 and amount = #{amount}

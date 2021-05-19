@@ -2,11 +2,14 @@ package com.example.SpringProjectDemo.controller;
 
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.BorrowReturn;
+import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.service.BorrowReturnService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * (BorrowReturn)表控制层
@@ -16,7 +19,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/borrowReturn")
-public class BorrowReturnController {
+public class BorrowReturnController extends BaseController{
     /**
      * 服务对象
      */
@@ -40,17 +43,66 @@ public class BorrowReturnController {
      *
      */
     @PostMapping("/addBorrowBook")
-    public Response<BorrowReturn> addBorrowBook(@RequestBody BorrowReturn borrowReturn) {
+    public Response<?> addBorrowBook(@RequestBody BorrowReturn borrowReturn, HttpServletRequest request) {
 
         try{
-
-            BorrowReturn result = borrowReturnService.insert(borrowReturn);
-            return ResultUtils.ResultSuccessUtilMessage(result,"新增借出记录成功");
+            if(borrowReturn.getBookId() == null){
+                return ResultUtils.ResultErrorUtil("未获取到书籍id");
+            }
+            if(borrowReturn.getAmount() == null){
+                return ResultUtils.ResultErrorUtil("未获取到书籍数量");
+            }
+            User user = getCurrentUser(request);
+            if(user == null){
+                return ResultUtils.ResultErrorUtil("未获取到当前登录人");
+            }
+            borrowReturn.setUserId(user.getId());
+            return borrowReturnService.insert(borrowReturn);
 
         }catch (Exception e){
             e.printStackTrace();
         }
         return ResultUtils.ResultErrorUtil("新增借出记录异常");
+    }
+
+    /**
+     * 归还图书
+     *
+     */
+    @PostMapping("/returnBook")
+    public Response<?> returnBook(@RequestBody BorrowReturn borrowReturn, HttpServletRequest request) {
+
+        try{
+            if(borrowReturn.getId() == null){
+                return ResultUtils.ResultErrorUtil("未获取到借用记录id");
+            }
+            BorrowReturn br = borrowReturnService.update(borrowReturn);
+            return ResultUtils.ResultSuccessUtilMessage(br,"书籍归还成功");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultUtils.ResultErrorUtil("书籍归还异常");
+    }
+
+    /**
+     * 获取图书借用记录
+     *
+     */
+    @GetMapping("/getBorrowList")
+    public Response<?> getBorrowList(BorrowReturn borrowReturn, HttpServletRequest request) {
+
+        try{
+            if(borrowReturn.getId() == null){
+                return ResultUtils.ResultErrorUtil("未获取到借用记录id");
+            }
+            BorrowReturn br = borrowReturnService.update(borrowReturn);
+            return ResultUtils.ResultSuccessUtilMessage(br,"书籍归还成功");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultUtils.ResultErrorUtil("书籍归还异常");
     }
 
 }

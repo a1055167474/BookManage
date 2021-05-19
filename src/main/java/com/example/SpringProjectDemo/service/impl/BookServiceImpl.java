@@ -53,7 +53,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book insert(Book book) {
         book.setCreateTime(new Date());
-        book.setState(0);
         book.setIsDeleted(0);
         bookDao.insert(book);
         return book;

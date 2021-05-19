@@ -1,5 +1,6 @@
 package com.example.SpringProjectDemo.service;
 
+import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.BorrowReturn;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public interface BorrowReturnService {
      * @param borrowReturn 实例对象
      * @return 实例对象
      */
-    BorrowReturn insert(BorrowReturn borrowReturn);
+    Response<?> insert(BorrowReturn borrowReturn);
 
     /**
      * 修改数据
