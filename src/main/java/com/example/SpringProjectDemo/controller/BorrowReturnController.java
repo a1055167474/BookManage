@@ -2,14 +2,15 @@ package com.example.SpringProjectDemo.controller;
 
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.BorrowReturn;
+import com.example.SpringProjectDemo.entity.Page;
 import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.service.BorrowReturnService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * (BorrowReturn)表控制层
@@ -90,19 +91,46 @@ public class BorrowReturnController extends BaseController{
      *
      */
     @GetMapping("/getBorrowList")
-    public Response<?> getBorrowList(BorrowReturn borrowReturn, HttpServletRequest request) {
+    public Response<?> getBorrowList(BorrowReturn borrowReturn, Page page) {
 
         try{
-            if(borrowReturn.getId() == null){
-                return ResultUtils.ResultErrorUtil("未获取到借用记录id");
+
+            //查询图书借用数据
+            List<BorrowReturn> brList = borrowReturnService.queryAllByLimit(borrowReturn, page);
+
+            //查询借用记录总条数
+            int count = borrowReturnService.queryTotal(borrowReturn);
+            return ResultUtils.ResultSuccessUtilMessage(brList,"查询成功",count);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultUtils.ResultErrorUtil("查询异常");
+    }
+
+
+    /**
+     * 获取当前登录人的图书借用记录
+     *
+     */
+    @GetMapping("/getCurrentUserBorrowList")
+    public Response<?> getCurrentUserBorrowList(BorrowReturn borrowReturn, Page page, HttpServletRequest request) {
+
+        try{
+            User user = getCurrentUser(request);
+            if(user == null){
+                return ResultUtils.ResultErrorUtil("未获取当前登录信息");
             }
-            BorrowReturn br = borrowReturnService.update(borrowReturn);
-            return ResultUtils.ResultSuccessUtilMessage(br,"书籍归还成功");
+            borrowReturn.setUserId(user.getId());
+            List<BorrowReturn> brList = borrowReturnService.queryAllByLimit(borrowReturn, page);
+
+            //查询借用记录总条数
+            int count = borrowReturnService.queryTotal(borrowReturn);
+            return ResultUtils.ResultSuccessUtilMessage(brList,"查询成功",count);
 
         }catch (Exception e){
             e.printStackTrace();
         }
-        return ResultUtils.ResultErrorUtil("书籍归还异常");
+        return ResultUtils.ResultErrorUtil("查询异常");
     }
 
 }

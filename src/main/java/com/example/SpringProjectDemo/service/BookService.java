@@ -1,6 +1,8 @@
 package com.example.SpringProjectDemo.service;
 
 import com.example.SpringProjectDemo.entity.Book;
+import com.example.SpringProjectDemo.entity.Page;
+
 import java.util.List;
 
 /**
@@ -53,6 +55,14 @@ public interface BookService {
     boolean deleteById(Long id);
 
 
-    List<Book> selectAllBook(Book book);
+    List<Book> selectAllBook(Book book , Page page);
+
+
+    /**
+     * 查询图书总数量用于分页
+     * @param book
+     * @return
+     */
+    int selectAllBookCount(Book book);
 
 }

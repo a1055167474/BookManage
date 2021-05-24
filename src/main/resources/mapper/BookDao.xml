@@ -36,29 +36,61 @@
           id, name, author, description, amount, create_time, state, is_deleted
         from t_book
         <where>
-            <if test="id != null">
-                and id = #{id}
+            <if test="book.id != null">
+                and id = #{book.id}
             </if>
-            <if test="name != null and name != ''">
-                and name LIKE CONCAT('%',#{name},'%')
+            <if test="book.name != null and book.name != ''">
+                and `name` LIKE CONCAT('%',#{book.name},'%')
             </if>
-            <if test="author != null and author != ''">
-                and author LIKE CONCAT('%',#{author},'%')
+            <if test="book.author != null and book.author != ''">
+                and author LIKE CONCAT('%',#{book.author},'%')
             </if>
-            <if test="description != null and description != ''">
-                and description LIKE CONCAT('%',#{description},'%')
+            <if test="book.description != null and book.description != ''">
+                and `description` LIKE CONCAT('%',#{book.description},'%')
             </if>
-            <if test="amount != null">
-                and amount = #{amount}
+            <if test="book.amount != null">
+                and amount = #{book.amount}
             </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
+            <if test="book.createTime != null">
+                and create_time = #{book.createTime}
             </if>
-            <if test="state != null">
-                and state = #{state}
+            <if test="book.state != null">
+                and state = #{book.state}
             </if>
-            <if test="isDeleted != null">
-                and is_deleted = #{isDeleted}
+            <if test="book.isDeleted != null">
+                and is_deleted = #{book.isDeleted}
+            </if>
+        </where>
+        limit #{page.start}, #{page.limit}
+    </select>
+    <select id="queryAllCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from t_book
+        <where>
+            <if test="book.id != null">
+                and id = #{book.id}
+            </if>
+            <if test="book.name != null and book.name != ''">
+                and `name` LIKE CONCAT('%',#{book.name},'%')
+            </if>
+            <if test="book.author != null and book.author != ''">
+                and author LIKE CONCAT('%',#{book.author},'%')
+            </if>
+            <if test="book.description != null and book.description != ''">
+                and `description` LIKE CONCAT('%',#{book.description},'%')
+            </if>
+            <if test="book.amount != null">
+                and amount = #{book.amount}
+            </if>
+            <if test="book.createTime != null">
+                and create_time = #{book.createTime}
+            </if>
+            <if test="book.state != null">
+                and state = #{book.state}
+            </if>
+            <if test="book.isDeleted != null">
+                and is_deleted = #{book.isDeleted}
             </if>
         </where>
     </select>

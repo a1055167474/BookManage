@@ -4,6 +4,7 @@ import com.example.SpringProjectDemo.common.Const;
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.Session;
 import com.example.SpringProjectDemo.entity.User;
+import com.example.SpringProjectDemo.entity.vo.UserVo;
 import com.example.SpringProjectDemo.service.SessionService;
 import com.example.SpringProjectDemo.service.UserService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
@@ -93,12 +94,15 @@ public class UserController {
      *
      */
     @PostMapping("/selectAllUser")
-    public Response<List<User>> selectAllUser(@RequestBody User user) {
+    public Response<List<User>> selectAllUser(@RequestBody UserVo user) {
 
         try{
 
             List<User> userList =  userService.selectAllUser(user);
-            return ResultUtils.ResultSuccessUtilMessage(userList,"查询用户成功",userList.size());
+
+            //查询用户总数，用于分页
+            int count = userService.selectUserCount(user);
+            return ResultUtils.ResultSuccessUtilMessage(userList,"查询用户成功", count);
 
         }catch (Exception e){
             e.printStackTrace();

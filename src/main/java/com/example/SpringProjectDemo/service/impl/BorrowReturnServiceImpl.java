@@ -5,6 +5,7 @@ import com.example.SpringProjectDemo.dao.BookDao;
 import com.example.SpringProjectDemo.entity.Book;
 import com.example.SpringProjectDemo.entity.BorrowReturn;
 import com.example.SpringProjectDemo.dao.BorrowReturnDao;
+import com.example.SpringProjectDemo.entity.Page;
 import com.example.SpringProjectDemo.service.BorrowReturnService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
 import org.springframework.stereotype.Service;
@@ -41,13 +42,18 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
     /**
      * 查询多条数据
      *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param borrowReturn 查询起始位置
+     * @param page 查询条数
      * @return 对象列表
      */
     @Override
-    public List<BorrowReturn> queryAllByLimit(int offset, int limit) {
-        return this.borrowReturnDao.queryAllByLimit(offset, limit);
+    public List<BorrowReturn> queryAllByLimit(BorrowReturn borrowReturn, Page page) {
+        return this.borrowReturnDao.queryAll(borrowReturn,page);
+    }
+
+    @Override
+    public int queryTotal(BorrowReturn borrowReturn) {
+        return this.borrowReturnDao.queryTotal(borrowReturn);
     }
 
     /**

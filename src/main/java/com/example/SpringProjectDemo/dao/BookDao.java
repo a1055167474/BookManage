@@ -1,6 +1,7 @@
 package com.example.SpringProjectDemo.dao;
 
 import com.example.SpringProjectDemo.entity.Book;
+import com.example.SpringProjectDemo.entity.Page;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public interface BookDao {
      * @param book 实例对象
      * @return 对象列表
      */
-    List<Book> queryAll(Book book);
+    List<Book> queryAll(@Param("book") Book book, @Param("page") Page page);
 
     /**
      * 新增数据
@@ -61,5 +62,7 @@ public interface BookDao {
      * @return 影响行数
      */
     int deleteById(Long id);
+
+    int queryAllCount(@Param("book") Book book);
 
 }

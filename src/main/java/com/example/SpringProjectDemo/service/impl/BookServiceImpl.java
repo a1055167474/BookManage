@@ -2,6 +2,7 @@ package com.example.SpringProjectDemo.service.impl;
 
 import com.example.SpringProjectDemo.entity.Book;
 import com.example.SpringProjectDemo.dao.BookDao;
+import com.example.SpringProjectDemo.entity.Page;
 import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.service.BookService;
 import org.springframework.stereotype.Service;
@@ -82,9 +83,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> selectAllBook(Book book) {
-        return bookDao.queryAll(book);
+    public List<Book> selectAllBook(Book book, Page page) {
+        return bookDao.queryAll(book, page);
     }
 
+    @Override
+    public int selectAllBookCount(Book book){
+        return bookDao.queryAllCount(book);
+    }
 
 }

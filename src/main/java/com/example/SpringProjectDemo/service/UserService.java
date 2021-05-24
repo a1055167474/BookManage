@@ -2,6 +2,7 @@ package com.example.SpringProjectDemo.service;
 
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.User;
+import com.example.SpringProjectDemo.entity.vo.UserVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,11 +61,18 @@ public interface UserService {
     /**
      * @Description: 根据条件查询用户信息
      */
-    List<User> selectAllUser(User user);
+    List<User> selectAllUser(UserVo user);
 
     /**
      * 根据sessionId查询用户信息
      */
     User selectByUserId(Long userId);
+
+    /**
+     * 获取用户数量用于分页
+     * @param user
+     * @return
+     */
+    int selectUserCount(UserVo user);
 
 }

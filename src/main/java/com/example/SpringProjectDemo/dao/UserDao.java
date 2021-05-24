@@ -1,6 +1,7 @@
 package com.example.SpringProjectDemo.dao;
 
 import com.example.SpringProjectDemo.entity.User;
+import com.example.SpringProjectDemo.entity.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public interface UserDao {
      * @param user 实例对象
      * @return 对象列表
      */
-    List<User> queryAll(User user);
+    List<User> queryAll(UserVo user);
 
     /**
      * 新增数据
@@ -72,4 +73,7 @@ public interface UserDao {
 
 
     User selectByUserId(@Param("userId")Long userId);
+
+
+    int queryCount(UserVo user);
 }

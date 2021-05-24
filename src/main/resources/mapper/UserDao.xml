@@ -58,6 +58,7 @@
                 and is_deleted = #{isDeleted}
             </if>
         </where>
+        limit #{start}, #{size}
     </select>
 
     <!--新增所有列-->
@@ -111,5 +112,33 @@
         select id, account, name, password, phone, user_role, create_time, is_deleted
         from t_user
         where id = #{userId}
+    </select>
+    <select id="queryCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from t_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="account != null and account != ''">
+                and account LIKE CONCAT('%',#{account},'%')
+            </if>
+            <if test="name != null and name != ''">
+                and name LIKE CONCAT('%',#{name},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone LIKE CONCAT('%',#{phone},'%')
+            </if>
+            <if test="userRole != null">
+                and user_role = #{userRole}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+        </where>
     </select>
 </mapper>

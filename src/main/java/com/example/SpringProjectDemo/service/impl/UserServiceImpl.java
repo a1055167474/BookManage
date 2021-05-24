@@ -3,6 +3,7 @@ package com.example.SpringProjectDemo.service.impl;
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.dao.UserDao;
 import com.example.SpringProjectDemo.entity.User;
+import com.example.SpringProjectDemo.entity.vo.UserVo;
 import com.example.SpringProjectDemo.service.UserService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
 import org.springframework.stereotype.Service;
@@ -103,7 +104,8 @@ public class UserServiceImpl implements UserService {
      * @Date: 2021/5/17
      */
     @Override
-    public List<User> selectAllUser(User user) {
+    public List<User> selectAllUser(UserVo user) {
+        user.setStart((user.getPage() - 1) * user.getSize());
         return userDao.queryAll(user);
     }
 
@@ -111,5 +113,12 @@ public class UserServiceImpl implements UserService {
     public User selectByUserId(Long userId) {
         return userDao.selectByUserId(userId);
     }
+
+    @Override
+    public int selectUserCount(UserVo user) {
+        user.setStart((user.getPage() - 1) * user.getSize());
+        return userDao.queryCount(user);
+    }
+
 
 }

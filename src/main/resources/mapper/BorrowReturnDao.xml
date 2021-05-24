@@ -57,6 +57,7 @@
                 and return_time = #{returnTime}
             </if>
         </where>
+        limit #{start}, #{limit}
     </select>
 
     <!--新增所有列-->
@@ -101,6 +102,34 @@
         from t_borrow_return
         where user_id = #{userId}
         and state = 0
+    </select>
+    <select id="queryTotal" resultType="java.lang.Integer">
+        select
+        count(*)
+        from t_borrow_return
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="bookId != null">
+                and book_id = #{bookId}
+            </if>
+            <if test="amount != null">
+                and amount = #{amount}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+            <if test="returnTime != null">
+                and return_time = #{returnTime}
+            </if>
+        </where>
     </select>
 
 </mapper>

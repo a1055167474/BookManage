@@ -2,6 +2,8 @@ package com.example.SpringProjectDemo.service;
 
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.BorrowReturn;
+import com.example.SpringProjectDemo.entity.Page;
+
 import java.util.List;
 
 /**
@@ -23,11 +25,19 @@ public interface BorrowReturnService {
     /**
      * 查询多条数据
      *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param borrowReturn 查询起始位置
+     * @param page 查询条数
      * @return 对象列表
      */
-    List<BorrowReturn> queryAllByLimit(int offset, int limit);
+    List<BorrowReturn> queryAllByLimit(BorrowReturn borrowReturn, Page page);
+
+    /**
+     * 查询借用记录总条数
+     * @param borrowReturn
+     * @return
+     */
+    int queryTotal(BorrowReturn borrowReturn);
+
 
     /**
      * 新增数据

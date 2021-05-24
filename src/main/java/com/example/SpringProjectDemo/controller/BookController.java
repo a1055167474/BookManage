@@ -1,7 +1,10 @@
 package com.example.SpringProjectDemo.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.Book;
+import com.example.SpringProjectDemo.entity.Page;
 import com.example.SpringProjectDemo.service.BookService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -41,12 +44,24 @@ public class BookController {
      *
      */
     @PostMapping("/selectAllBook")
-    public Response<List<Book>> selectAllBook(@RequestBody Book book) {
+    public Response<List<Book>> selectAllBook(@RequestBody JSONObject jsonObject) {
 
         try{
 
-            List<Book> bookList =  bookService.selectAllBook(book);
-            return ResultUtils.ResultSuccessUtilMessage(bookList,"查询图书信息成功",bookList.size());
+            Object bookObject = jsonObject.get("book");
+            JSONObject bookJson = JSONObject.parseObject(JSON.toJSONString(bookObject));
+            Book book = bookJson.toJavaObject(Book.class);
+
+            Object pageObject = jsonObject.get("page");
+            JSONObject pageJson = JSONObject.parseObject(JSON.toJSONString(pageObject));
+            Page page = pageJson.toJavaObject(Page.class);
+
+            //分页查询图书列表
+            List<Book> bookList =  bookService.selectAllBook(book, page);
+
+            //查询图书总数量
+            int count = bookService.selectAllBookCount(book);
+            return ResultUtils.ResultSuccessUtilMessage(bookList,"查询图书信息成功",count);
 
         }catch (Exception e){
             e.printStackTrace();
