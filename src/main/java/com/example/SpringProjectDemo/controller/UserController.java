@@ -39,7 +39,7 @@ public class UserController {
     private SessionService sessionService;
 
     /**
-     * 删除用户信息
+     * 查询当前登录用户信息
      *
      */
     @GetMapping("/getUserInfo")

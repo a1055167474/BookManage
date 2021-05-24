@@ -4,6 +4,7 @@ import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.BorrowReturn;
 import com.example.SpringProjectDemo.entity.Page;
 import com.example.SpringProjectDemo.entity.User;
+import com.example.SpringProjectDemo.entity.vo.BorrowReturnVo;
 import com.example.SpringProjectDemo.service.BorrowReturnService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
 import org.springframework.web.bind.annotation.*;
@@ -91,12 +92,12 @@ public class BorrowReturnController extends BaseController{
      *
      */
     @GetMapping("/getBorrowList")
-    public Response<?> getBorrowList(BorrowReturn borrowReturn, Page page) {
+    public Response<?> getBorrowList(BorrowReturnVo borrowReturn) {
 
         try{
 
             //查询图书借用数据
-            List<BorrowReturn> brList = borrowReturnService.queryAllByLimit(borrowReturn, page);
+            List<BorrowReturn> brList = borrowReturnService.queryAllByLimit(borrowReturn);
 
             //查询借用记录总条数
             int count = borrowReturnService.queryTotal(borrowReturn);
@@ -113,7 +114,7 @@ public class BorrowReturnController extends BaseController{
      *
      */
     @GetMapping("/getCurrentUserBorrowList")
-    public Response<?> getCurrentUserBorrowList(BorrowReturn borrowReturn, Page page, HttpServletRequest request) {
+    public Response<?> getCurrentUserBorrowList(BorrowReturnVo borrowReturn, HttpServletRequest request) {
 
         try{
             User user = getCurrentUser(request);
@@ -121,7 +122,7 @@ public class BorrowReturnController extends BaseController{
                 return ResultUtils.ResultErrorUtil("未获取当前登录信息");
             }
             borrowReturn.setUserId(user.getId());
-            List<BorrowReturn> brList = borrowReturnService.queryAllByLimit(borrowReturn, page);
+            List<BorrowReturn> brList = borrowReturnService.queryAllByLimit(borrowReturn);
 
             //查询借用记录总条数
             int count = borrowReturnService.queryTotal(borrowReturn);

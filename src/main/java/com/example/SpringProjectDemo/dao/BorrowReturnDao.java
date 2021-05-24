@@ -2,6 +2,7 @@ package com.example.SpringProjectDemo.dao;
 
 import com.example.SpringProjectDemo.entity.BorrowReturn;
 import com.example.SpringProjectDemo.entity.Page;
+import com.example.SpringProjectDemo.entity.vo.BorrowReturnVo;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public interface BorrowReturnDao {
      * @param borrowReturn 实例对象
      * @return 对象列表
      */
-    List<BorrowReturn> queryAll(BorrowReturn borrowReturn, Page page);
+    List<BorrowReturn> queryAll(BorrowReturnVo borrowReturn);
 
     /**
      * 新增数据
@@ -71,6 +72,6 @@ public interface BorrowReturnDao {
     BorrowReturn selectByUserId(@Param("userId") Long userId);
 
 
-    int queryTotal(BorrowReturn borrowReturn);
+    int queryTotal(BorrowReturnVo borrowReturn);
 
 }
