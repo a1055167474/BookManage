@@ -131,5 +131,18 @@
             </if>
         </where>
     </select>
+    <select id="getLostReportList" resultType="com.example.SpringProjectDemo.entity.BorrowReturn">
+        select
+            id, user_id, book_id, amount, create_time, state, return_time
+        from t_borrow_return
+        where state = 2
+        limit #{start}, #{size}
+    </select>
+    <select id="getLostReportTotal" resultType="java.lang.Integer">
+        select
+            count(*)
+        from t_borrow_return
+        where state = 2
+    </select>
 
 </mapper>

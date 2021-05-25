@@ -23,6 +23,7 @@ public class Const {
 
     public static final Integer COOKIE_OUT_TIME = 5000;
 
+    //session超时时间配置，当前为300秒
     public static final Integer SESSION_OUT_TIME = 5000;
 
     public static final String SESSION_KEY_HEAD = OptProperties

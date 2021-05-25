@@ -134,4 +134,74 @@ public class BorrowReturnController extends BaseController{
         return ResultUtils.ResultErrorUtil("查询异常");
     }
 
+
+    /**
+     * 图书挂失
+     *
+     */
+    @GetMapping("/lostReport")
+    public Response<?> lostReport(BorrowReturnVo borrowReturn, HttpServletRequest request) {
+
+        try{
+            if(borrowReturn.getId() == null){
+                return ResultUtils.ResultErrorUtil("未获取到借用记录Id");
+            }
+            User user = getCurrentUser(request);
+            if(user == null){
+                return ResultUtils.ResultErrorUtil("未获取当前登录信息");
+            }
+            return borrowReturnService.lostReport(borrowReturn);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultUtils.ResultErrorUtil("查询异常");
+    }
+
+
+    /**
+     * 管理员处理图书挂失记录
+     *
+     */
+    @GetMapping("/handleLostReport")
+    public Response<?> handleLostReport(BorrowReturnVo borrowReturn, HttpServletRequest request) {
+
+        try{
+            if(borrowReturn.getId() == null){
+                return ResultUtils.ResultErrorUtil("未获取到借用记录Id");
+            }
+            User user = getCurrentUser(request);
+            if(user == null){
+                return ResultUtils.ResultErrorUtil("未获取当前登录信息");
+            }
+            return borrowReturnService.handleLostReport(borrowReturn);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultUtils.ResultErrorUtil("查询异常");
+    }
+
+    /**
+     * 查询图书挂失记录
+     *
+     */
+    @GetMapping("/getLostReportList")
+    public Response<?> getLostReportList(BorrowReturnVo borrowReturn, HttpServletRequest request) {
+
+        try{
+            User user = getCurrentUser(request);
+            if(user == null){
+                return ResultUtils.ResultErrorUtil("未获取当前登录信息");
+            }
+            //查询图书挂失数据
+            List<BorrowReturn> brList = borrowReturnService.getLostReportList(borrowReturn);
+            //查询挂失记录总条数
+            int count = borrowReturnService.getLostReportTotal(borrowReturn);
+            return ResultUtils.ResultSuccessUtilMessage(brList,"查询成功",count);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultUtils.ResultErrorUtil("查询异常");
+    }
+
+
 }

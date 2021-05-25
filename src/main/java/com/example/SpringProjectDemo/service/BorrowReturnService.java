@@ -63,4 +63,33 @@ public interface BorrowReturnService {
      */
     boolean deleteById(Long id);
 
+    /**
+     * 图书丢失挂失
+     * @param borrowReturnVo
+     * @return
+     */
+    Response<?> lostReport(BorrowReturnVo borrowReturnVo);
+
+
+    /**
+     * 管理员处理挂失记录
+     * @param borrowReturnVo
+     * @return
+     */
+    Response<?> handleLostReport(BorrowReturnVo borrowReturnVo);
+
+
+    /**
+     * 获取挂失记录列表
+     * @param borrowReturnVo
+     * @return
+     */
+    List<BorrowReturn> getLostReportList(BorrowReturnVo borrowReturnVo);
+
+    /**
+     * 获取挂失记录总数
+     * @param borrowReturnVo
+     * @return
+     */
+    int getLostReportTotal(BorrowReturnVo borrowReturnVo);
 }

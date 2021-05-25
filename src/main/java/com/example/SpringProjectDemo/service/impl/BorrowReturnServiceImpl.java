@@ -122,4 +122,57 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
     public boolean deleteById(Long id) {
         return this.borrowReturnDao.deleteById(id) > 0;
     }
+
+    /**
+     * 书籍借出挂失
+     * @param borrowReturnVo
+     * @return
+     */
+    @Override
+    public Response<?> lostReport(BorrowReturnVo borrowReturnVo) {
+
+        borrowReturnVo.setState(2);
+        //更新图书借出记录状态
+        borrowReturnDao.update(borrowReturnVo);
+
+        return ResultUtils.ResultSuccessUtilMessage(null,"书籍已挂失，请联系管理员进行处理");
+    }
+
+    /**
+     * 管理员处理挂失记录（删除挂失记录）
+     * @param borrowReturnVo
+     * @return
+     */
+    @Override
+    public Response<?> handleLostReport(BorrowReturnVo borrowReturnVo) {
+
+        //将图书借用记录删除
+        borrowReturnDao.deleteById(borrowReturnVo.getId());
+
+        return ResultUtils.ResultSuccessUtilMessage(null,"处理成功");
+    }
+
+    /**
+     * 获取挂失记录列表
+     * @param borrowReturnVo
+     * @return
+     */
+    @Override
+    public List<BorrowReturn> getLostReportList(BorrowReturnVo borrowReturnVo) {
+        if(borrowReturnVo.getPage() < 0){
+            borrowReturnVo.setPage(0);
+        }
+        borrowReturnVo.setStart((borrowReturnVo.getPage() - 1) * borrowReturnVo.getSize());
+        return this.borrowReturnDao.getLostReportList(borrowReturnVo);
+    }
+
+    /**
+     * 获取挂失记录总数
+     * @param borrowReturnVo
+     * @return
+     */
+    @Override
+    public int getLostReportTotal(BorrowReturnVo borrowReturnVo) {
+        return this.borrowReturnDao.getLostReportTotal(borrowReturnVo);
+    }
 }

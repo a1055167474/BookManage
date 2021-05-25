@@ -72,6 +72,26 @@ public interface BorrowReturnDao {
     BorrowReturn selectByUserId(@Param("userId") Long userId);
 
 
+    /**
+     * 查询图书借用记录数量
+     * @param borrowReturn
+     * @return
+     */
     int queryTotal(BorrowReturnVo borrowReturn);
+
+
+    /**
+     * 获取挂失记录列表
+     * @param borrowReturnVo
+     * @return
+     */
+    List<BorrowReturn> getLostReportList(BorrowReturnVo borrowReturnVo);
+
+    /**
+     * 获取挂失记录总数
+     * @param borrowReturnVo
+     * @return
+     */
+    int getLostReportTotal(BorrowReturnVo borrowReturnVo);
 
 }
