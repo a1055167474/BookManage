@@ -78,9 +78,11 @@ public class BorrowReturnController extends BaseController{
             if(borrowReturn.getId() == null){
                 return ResultUtils.ResultErrorUtil("未获取到借用记录id");
             }
-            BorrowReturn br = borrowReturnService.update(borrowReturn);
-            return ResultUtils.ResultSuccessUtilMessage(br,"书籍归还成功");
-
+            User user = getCurrentUser(request);
+            if(user == null){
+                return ResultUtils.ResultErrorUtil("未获取到当前登录信息");
+            }
+            return borrowReturnService.update(borrowReturn,user);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -97,7 +99,7 @@ public class BorrowReturnController extends BaseController{
         try{
 
             //查询图书借用数据
-            List<BorrowReturn> brList = borrowReturnService.queryAllByLimit(borrowReturn);
+            List<BorrowReturnVo> brList = borrowReturnService.queryAllByLimit(borrowReturn);
 
             //查询借用记录总条数
             int count = borrowReturnService.queryTotal(borrowReturn);
@@ -122,7 +124,7 @@ public class BorrowReturnController extends BaseController{
                 return ResultUtils.ResultErrorUtil("未获取当前登录信息");
             }
             borrowReturn.setUserId(user.getId());
-            List<BorrowReturn> brList = borrowReturnService.queryAllByLimit(borrowReturn);
+            List<BorrowReturnVo> brList = borrowReturnService.queryAllByLimit(borrowReturn);
 
             //查询借用记录总条数
             int count = borrowReturnService.queryTotal(borrowReturn);

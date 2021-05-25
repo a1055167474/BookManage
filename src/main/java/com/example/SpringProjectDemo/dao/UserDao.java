@@ -76,4 +76,11 @@ public interface UserDao {
 
 
     int queryCount(UserVo user);
+
+    /**
+     * 根据用户id集合查询用户信息
+     * @param userIds
+     * @return
+     */
+    List<User> getInfoByIds(List<Long> userIds);
 }

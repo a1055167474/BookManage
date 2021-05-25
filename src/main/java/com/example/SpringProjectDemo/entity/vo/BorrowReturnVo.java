@@ -15,7 +15,11 @@ public class BorrowReturnVo extends BorrowReturn {
     //借用人联系方式
     private String phone;
 
-    //todo
+    //图书名称
+    private String bookName;
+
+    //图书作者
+    private String bookAuthor;
 
     //当前页码
     private int page;
@@ -63,5 +67,21 @@ public class BorrowReturnVo extends BorrowReturn {
 
     public void setStart(int start) {
         this.start = start;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public String getBookAuthor() {
+        return bookAuthor;
+    }
+
+    public void setBookAuthor(String bookAuthor) {
+        this.bookAuthor = bookAuthor;
     }
 }

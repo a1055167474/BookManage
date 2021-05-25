@@ -38,7 +38,7 @@ public interface BorrowReturnDao {
      * @param borrowReturn 实例对象
      * @return 对象列表
      */
-    List<BorrowReturn> queryAll(BorrowReturnVo borrowReturn);
+    List<BorrowReturnVo> queryAll(BorrowReturnVo borrowReturn);
 
     /**
      * 新增数据

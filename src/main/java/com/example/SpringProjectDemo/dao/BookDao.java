@@ -65,4 +65,11 @@ public interface BookDao {
 
     int queryAllCount(@Param("book") Book book);
 
+    /**
+     * 根据图书id列表查询图书信息
+     * @param bookIds
+     * @return
+     */
+    List<Book> getInfoByIds(List<Long> bookIds);
+
 }

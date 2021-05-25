@@ -141,4 +141,15 @@
             </if>
         </where>
     </select>
+
+    <select id="getInfoByIds" resultType="com.example.SpringProjectDemo.entity.User">
+        select
+        id, account, name, password, phone, user_role, create_time, is_deleted
+        from t_user
+        where id IN
+        <foreach collection="userIds" close=")" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

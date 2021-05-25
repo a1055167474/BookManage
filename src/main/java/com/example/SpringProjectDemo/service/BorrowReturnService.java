@@ -3,6 +3,7 @@ package com.example.SpringProjectDemo.service;
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.BorrowReturn;
 import com.example.SpringProjectDemo.entity.Page;
+import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.entity.vo.BorrowReturnVo;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public interface BorrowReturnService {
      * @param borrowReturn 查询起始位置
      * @return 对象列表
      */
-    List<BorrowReturn> queryAllByLimit(BorrowReturnVo borrowReturn);
+    List<BorrowReturnVo> queryAllByLimit(BorrowReturnVo borrowReturn);
 
     /**
      * 查询借用记录总条数
@@ -53,7 +54,7 @@ public interface BorrowReturnService {
      * @param borrowReturn 实例对象
      * @return 实例对象
      */
-    BorrowReturn update(BorrowReturn borrowReturn);
+    Response<?> update(BorrowReturn borrowReturn, User user);
 
     /**
      * 通过主键删除数据

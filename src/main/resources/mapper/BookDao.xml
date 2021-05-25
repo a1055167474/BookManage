@@ -94,6 +94,15 @@
             </if>
         </where>
     </select>
+    <select id="getInfoByIds" resultType="com.example.SpringProjectDemo.entity.Book">
+        select
+            id, name, author, description, amount, create_time, state, is_deleted
+        from t_book
+        where id IN
+        <foreach collection="bookIds" close=")" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
