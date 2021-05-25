@@ -28,7 +28,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
     /**
      * 服务对象
      */
@@ -182,6 +182,28 @@ public class UserController {
             e.printStackTrace();
         }
         return ResultUtils.ResultErrorUtil("新增用户异常");
+    }
+
+
+    /**
+     * 查询当前登录用户角色
+     * @param request
+     * @return
+     */
+    @PostMapping("/checkUsePermission")
+    public Response<?> checkUsePermission(HttpServletRequest request) {
+
+        try {
+            User user = getCurrentUser(request);
+            if (user == null) {
+                return ResultUtils.ResultErrorUtil("未获取到当前登录信息");
+            }
+            User user1 = userService.selectByUserId(user.getId());
+            return ResultUtils.ResultSuccessUtilMessage(user1.getUserRole(), "查询用户角色成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResultUtils.ResultErrorUtil("查询用户角色异常");
     }
 
 
