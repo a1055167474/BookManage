@@ -30,31 +30,55 @@
     </select>
 
     <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="BaseResultMap">
+    <select id="queryAll" resultType="com.example.SpringProjectDemo.entity.vo.BorrowReturnVo">
         select
-          id, user_id, book_id, amount, create_time, state, return_time
-        from t_borrow_return
+        br.id,
+        br.user_id as userId,
+        br.book_id as bookId,
+        br.amount as amount,
+        br.create_time as createTime,
+        br.state as state,
+        br.return_time as returnTime,
+        b.name as bookName,
+        b.author as bookAuthor,
+        u.name as userName,
+        u.phone as phone
+        from t_borrow_return br
+        left join t_book b on b.id = br.book_id
+        left join t_user u on u.id = br.user_id
         <where>
             <if test="id != null">
-                and id = #{id}
+                and br.id = #{id}
             </if>
             <if test="userId != null">
-                and user_id = #{userId}
+                and br.user_id = #{userId}
             </if>
             <if test="bookId != null">
-                and book_id = #{bookId}
+                and br.book_id = #{bookId}
             </if>
             <if test="amount != null">
-                and amount = #{amount}
+                and br.amount = #{amount}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime}
+                and br.create_time = #{createTime}
             </if>
             <if test="state != null">
-                and state = #{state}
+                and br.state = #{state}
             </if>
             <if test="returnTime != null">
-                and return_time = #{returnTime}
+                and br.return_time = #{returnTime}
+            </if>
+            <if test="bookName != null">
+                and b.name LIKE CONCAT('%',#{bookName},'%')
+            </if>
+            <if test="bookAuthor != null">
+                and b.author LIKE CONCAT('%',#{bookAuthor},'%')
+            </if>
+            <if test="userName != null">
+                and u.name LIKE CONCAT('%',#{userName},'%')
+            </if>
+            <if test="phone != null">
+                and u.phone LIKE CONCAT('%',#{phone},'%')
             </if>
         </where>
         limit #{start}, #{size}

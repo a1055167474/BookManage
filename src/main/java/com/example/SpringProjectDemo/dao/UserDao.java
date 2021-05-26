@@ -82,5 +82,5 @@ public interface UserDao {
      * @param userIds
      * @return
      */
-    List<User> getInfoByIds(List<Long> userIds);
+    List<User> getInfoByIds(@Param("userIds") List<Long> userIds);
 }

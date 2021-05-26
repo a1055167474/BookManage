@@ -152,7 +152,7 @@ public class BorrowReturnController extends BaseController{
             if(user == null){
                 return ResultUtils.ResultErrorUtil("未获取当前登录信息");
             }
-            return borrowReturnService.lostReport(borrowReturn);
+            return borrowReturnService.lostReport(borrowReturn,user);
         }catch (Exception e){
             e.printStackTrace();
         }

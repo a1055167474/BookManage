@@ -58,40 +58,7 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
         }
         borrowReturn.setStart((borrowReturn.getPage() - 1) * borrowReturn.getSize());
         //查询图书借用记录
-        List<BorrowReturnVo> brList = borrowReturnDao.queryAll(borrowReturn);
-
-        List<Long> bookIds = new ArrayList<>();
-        List<Long> userIds = new ArrayList<>();
-        for(BorrowReturn br : brList){
-            bookIds.add(br.getBookId());
-            userIds.add(br.getUserId());
-        }
-        //根据bookId查询书籍信息
-        List<Book> bookList = bookDao.getInfoByIds(bookIds);
-        //根据userId查询用户信息
-        List<User> userList = userDao.getInfoByIds(userIds);
-
-        //给借出记录循环赋值
-        for(BorrowReturnVo br : brList){
-            for(Book b : bookList){
-                if(b.getId().equals(br.getBookId())){
-                    br.setBookName(b.getName());
-                    br.setBookAuthor(b.getAuthor());
-                    break;
-                }
-            }
-        }
-
-        for(BorrowReturnVo br : brList){
-            for(User u : userList){
-                if(u.getId().equals(br.getUserId())){
-                    br.setUserName(u.getName());
-                    br.setPhone(u.getPhone());
-                    break;
-                }
-            }
-        }
-        return brList;
+        return borrowReturnDao.queryAll(borrowReturn);
     }
 
     @Override
@@ -120,6 +87,13 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
         if(amount < 1){
             return ResultUtils.ResultErrorUtil("当前图书库存不足，无法借阅");
         }
+
+        //判断当前图书是否已经下架
+        Integer state = book.getState();
+        if(state == 1){
+            return ResultUtils.ResultErrorUtil("图书已下架，无法借阅");
+        }
+
         //可以借用，减去库存并且入库
         book.setAmount(amount - borrowReturn.getAmount());
         bookDao.update(book);
@@ -145,17 +119,26 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
         if(br == null){
             return ResultUtils.ResultErrorUtil("记录不存在，请刷新重试");
         }
-        if(!user.getId().equals(borrowReturn.getUserId())){
+        if(!user.getId().equals(br.getUserId())){
             return ResultUtils.ResultErrorUtil("当前登录人和借用人不符合，无法归还");
         }
+
+        //判断当前图书是否已经挂失
+        Integer state = br.getState();
+        if(state == 1){
+            return ResultUtils.ResultErrorUtil("当前书籍已归还，请不要重复操作");
+        }else if(state ==2){
+            return ResultUtils.ResultErrorUtil("当前书籍已挂失，无法归还");
+        }
+
         //图书归还
-        borrowReturn.setReturnTime(new Date());
-        borrowReturn.setState(1);
-        this.borrowReturnDao.update(borrowReturn);
+        br.setReturnTime(new Date());
+        br.setState(1);
+        this.borrowReturnDao.update(br);
 
         //书籍库存数量增加
-        Book book = bookDao.queryById(borrowReturn.getBookId());
-        book.setAmount(book.getAmount() + borrowReturn.getAmount());
+        Book book = bookDao.queryById(br.getBookId());
+        book.setAmount(book.getAmount() + br.getAmount());
         bookDao.update(book);
         return ResultUtils.ResultSuccessUtilMessage(null,"书籍归还成功");
     }
@@ -177,8 +160,19 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
      * @return
      */
     @Override
-    public Response<?> lostReport(BorrowReturnVo borrowReturnVo) {
+    public Response<?> lostReport(BorrowReturnVo borrowReturnVo,User user) {
 
+        BorrowReturn br = borrowReturnDao.queryById(borrowReturnVo.getId());
+        if(!br.getUserId().equals(user.getId())){
+            return  ResultUtils.ResultErrorUtil("当前登录人和借用人不符合，无法挂失");
+        }
+        Integer state = br.getState();
+        if(state == 2){
+            return  ResultUtils.ResultErrorUtil("当前书籍已挂失，无法继续操作");
+        }
+        if(state == 1){
+            return  ResultUtils.ResultErrorUtil("当前书籍已归还，无法继续操作");
+        }
         borrowReturnVo.setState(2);
         //更新图书借出记录状态
         borrowReturnDao.update(borrowReturnVo);

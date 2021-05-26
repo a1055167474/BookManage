@@ -70,6 +70,6 @@ public interface BookDao {
      * @param bookIds
      * @return
      */
-    List<Book> getInfoByIds(List<Long> bookIds);
+    List<Book> getInfoByIds(@Param("bookIds") List<Long> bookIds);
 
 }

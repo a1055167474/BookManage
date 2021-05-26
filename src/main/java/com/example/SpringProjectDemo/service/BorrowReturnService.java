@@ -69,7 +69,7 @@ public interface BorrowReturnService {
      * @param borrowReturnVo
      * @return
      */
-    Response<?> lostReport(BorrowReturnVo borrowReturnVo);
+    Response<?> lostReport(BorrowReturnVo borrowReturnVo,User user);
 
 
     /**
