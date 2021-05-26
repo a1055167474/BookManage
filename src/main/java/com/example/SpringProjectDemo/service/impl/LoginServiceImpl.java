@@ -44,6 +44,12 @@ public class LoginServiceImpl implements LoginService {
         if(!user.getPassword().equals(user1.getPassword())){
             return ResultUtils.ResultErrorUtil("用户名或密码错误");
         }
+
+        //判断当前账号信息是否已经停用
+        if(user1.getState() == 1){
+            return ResultUtils.ResultErrorUtil("账号已停用，请联系管理员进行激活");
+        }
+
         Long userId = user1.getId();
         String sessionId = session.getId();
 

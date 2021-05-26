@@ -44,11 +44,24 @@ public class User implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createTime;
+
+    /**
+     * 账号状态（0-启用  1-停用）
+     */
+    private Integer state;
     /**
     * 是否删除（0-未删除   1-删除）
     */
     private Integer isDeleted;
 
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
 
     public Long getId() {
         return id;
