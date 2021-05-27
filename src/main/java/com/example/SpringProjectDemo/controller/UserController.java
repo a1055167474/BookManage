@@ -175,6 +175,9 @@ public class UserController extends BaseController{
             if(user.getUserRole() == null){
                 return ResultUtils.ResultErrorUtil("未获取到用户角色");
             }
+            if(user.getState() == null){
+                return ResultUtils.ResultErrorUtil("未获取到账号状态");
+            }
 
             return userService.insert(user);
 
@@ -190,7 +193,7 @@ public class UserController extends BaseController{
      * @param request
      * @return
      */
-    @PostMapping("/checkUsePermission")
+    @GetMapping("/checkUsePermission")
     public Response<?> checkUsePermission(HttpServletRequest request) {
 
         try {
@@ -204,6 +207,27 @@ public class UserController extends BaseController{
             e.printStackTrace();
         }
         return ResultUtils.ResultErrorUtil("查询用户角色异常");
+    }
+
+    /**
+     * 判断当前登录用户是否为管理员
+     * @param request
+     * @return
+     */
+    @GetMapping("/isManager")
+    public Response<?> isManager(HttpServletRequest request) {
+
+        try {
+            User user = getCurrentUser(request);
+            if (user == null) {
+                return ResultUtils.ResultErrorUtil("未获取到当前登录信息");
+            }
+            Boolean flag = isManager(user);
+            return ResultUtils.ResultSuccessUtilMessage(flag, "查询成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResultUtils.ResultErrorUtil("查询异常");
     }
 
 

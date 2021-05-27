@@ -109,4 +109,10 @@ public class BaseController {
 
         return userService.selectByUserId(userId);
     }
+
+    //判断当前登录用户是否为管理员
+    public boolean isManager(User user){
+        User user1 = userService.queryById(user.getId());
+        return user1.getUserRole() == 1;
+    }
 }
