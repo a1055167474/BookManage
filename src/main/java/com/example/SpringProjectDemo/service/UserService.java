@@ -76,6 +76,11 @@ public interface UserService {
     int selectUserCount(UserVo user);
 
 
+    /**
+     * 逻辑删除用户信息
+     * @param user
+     * @return
+     */
     Response<?> deleteUser(User user);
 
 }

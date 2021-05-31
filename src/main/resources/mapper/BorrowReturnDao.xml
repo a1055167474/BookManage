@@ -83,6 +83,7 @@
             </if>
             and br.is_deleted = 0
         </where>
+        order by br.create_time desc
         limit #{start}, #{size}
     </select>
 

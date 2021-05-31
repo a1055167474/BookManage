@@ -227,5 +227,28 @@ public class UserController extends BaseController{
         return ResultUtils.ResultErrorUtil("查询异常");
     }
 
+    /**
+     * 账户启用
+     * @param request
+     * @return
+     */
+    @PostMapping("/userAccountOn")
+    public Response<?> userAccountOn(@RequestBody User user, HttpServletRequest request) {
+
+        try {
+            User user1 = getCurrentUser(request);
+            if (user1 == null) {
+                return ResultUtils.ResultErrorUtil("未获取到当前登录信息");
+            }
+            boolean i = isManager(user1);
+            if(!i){
+                return ResultUtils.ResultErrorUtil("没有权限");
+            }
+            return userService.update(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResultUtils.ResultErrorUtil("账号启用异常");
+    }
 
 }
