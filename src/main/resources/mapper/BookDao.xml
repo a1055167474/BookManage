@@ -27,6 +27,7 @@
         select
           id, name, author, description, amount, create_time, state, is_deleted
         from t_book
+        where is_deleted = 0
         limit #{offset}, #{limit}
     </select>
 
@@ -60,6 +61,7 @@
             <if test="book.isDeleted != null">
                 and is_deleted = #{book.isDeleted}
             </if>
+        and is_deleted = 0
         </where>
         limit #{page.start}, #{page.limit}
     </select>
@@ -92,6 +94,7 @@
             <if test="book.isDeleted != null">
                 and is_deleted = #{book.isDeleted}
             </if>
+            and is_deleted = 0
         </where>
     </select>
     <select id="getInfoByIds" resultType="com.example.SpringProjectDemo.entity.Book">

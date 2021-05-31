@@ -16,7 +16,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
-          id, user_id, book_id, amount, create_time, state, return_time
+          id, user_id, book_id, amount, create_time, state, return_time, is_deleted
         from t_borrow_return
         where id = #{id}
     </select>
@@ -26,6 +26,7 @@
         select
           id, user_id, book_id, amount, create_time, state, return_time
         from t_borrow_return
+        where is_deleted = 0
         limit #{offset}, #{limit}
     </select>
 
@@ -80,14 +81,15 @@
             <if test="phone != null">
                 and u.phone LIKE CONCAT('%',#{phone},'%')
             </if>
+            and br.is_deleted = 0
         </where>
         limit #{start}, #{size}
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into t_borrow_return(user_id, book_id, amount, create_time, state, return_time)
-        values (#{userId}, #{bookId}, #{amount}, #{createTime}, #{state}, #{returnTime})
+        insert into t_borrow_return(user_id, book_id, amount, create_time, state, return_time,is_deleted)
+        values (#{userId}, #{bookId}, #{amount}, #{createTime}, #{state}, #{returnTime}, #{isDeleted})
     </insert>
 
     <!--通过主键修改数据-->
@@ -112,6 +114,9 @@
             <if test="returnTime != null">
                 return_time = #{returnTime},
             </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
         </set>
         where id = #{id}
     </update>
@@ -126,40 +131,112 @@
         from t_borrow_return
         where user_id = #{userId}
         and state = 0
+        and is_deleted = 0
     </select>
+
+    <select id="selectByUserId2" resultType="com.example.SpringProjectDemo.entity.BorrowReturn">
+        select id, user_id, book_id, amount, create_time, state, return_time
+        from t_borrow_return
+        where user_id = #{userId}
+          and state in (0,2)
+          and is_deleted = 0
+    </select>
+
     <select id="queryTotal" resultType="java.lang.Integer">
         select
         count(*)
-        from t_borrow_return
+        from t_borrow_return br
+        left join t_book b on b.id = br.book_id
+        left join t_user u on u.id = br.user_id
         <where>
             <if test="id != null">
-                and id = #{id}
+                and br.id = #{id}
             </if>
             <if test="userId != null">
-                and user_id = #{userId}
+                and br.user_id = #{userId}
             </if>
             <if test="bookId != null">
-                and book_id = #{bookId}
+                and br.book_id = #{bookId}
             </if>
             <if test="amount != null">
-                and amount = #{amount}
+                and br.amount = #{amount}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime}
+                and br.create_time = #{createTime}
             </if>
             <if test="state != null">
-                and state = #{state}
+                and br.state = #{state}
             </if>
             <if test="returnTime != null">
-                and return_time = #{returnTime}
+                and br.return_time = #{returnTime}
             </if>
+            <if test="bookName != null">
+                and b.name LIKE CONCAT('%',#{bookName},'%')
+            </if>
+            <if test="bookAuthor != null">
+                and b.author LIKE CONCAT('%',#{bookAuthor},'%')
+            </if>
+            <if test="userName != null">
+                and u.name LIKE CONCAT('%',#{userName},'%')
+            </if>
+            <if test="phone != null">
+                and u.phone LIKE CONCAT('%',#{phone},'%')
+            </if>
+            and br.is_deleted = 0
         </where>
     </select>
-    <select id="getLostReportList" resultType="com.example.SpringProjectDemo.entity.BorrowReturn">
+    <select id="getLostReportList" resultType="com.example.SpringProjectDemo.entity.vo.BorrowReturnVo">
         select
-            id, user_id, book_id, amount, create_time, state, return_time
-        from t_borrow_return
-        where state = 2
+        br.id,
+        br.user_id as userId,
+        br.book_id as bookId,
+        br.amount as amount,
+        br.create_time as createTime,
+        br.state as state,
+        br.return_time as returnTime,
+        b.name as bookName,
+        b.author as bookAuthor,
+        u.name as userName,
+        u.phone as phone,
+        br.is_deleted as isDeleted
+        from t_borrow_return br
+        left join t_book b on b.id = br.book_id
+        left join t_user u on u.id = br.user_id
+        where br.state = 2
+          and br.is_deleted = 0
+         <if test="id != null">
+             and br.id = #{id}
+         </if>
+         <if test="userId != null">
+             and br.user_id = #{userId}
+         </if>
+         <if test="bookId != null">
+             and br.book_id = #{bookId}
+         </if>
+         <if test="amount != null">
+             and br.amount = #{amount}
+         </if>
+         <if test="createTime != null">
+             and br.create_time = #{createTime}
+         </if>
+         <if test="state != null">
+             and br.state = #{state}
+         </if>
+         <if test="returnTime != null">
+             and br.return_time = #{returnTime}
+         </if>
+         <if test="bookName != null">
+             and b.name LIKE CONCAT('%',#{bookName},'%')
+         </if>
+         <if test="bookAuthor != null">
+             and b.author LIKE CONCAT('%',#{bookAuthor},'%')
+         </if>
+         <if test="userName != null">
+             and u.name LIKE CONCAT('%',#{userName},'%')
+         </if>
+         <if test="phone != null">
+             and u.phone LIKE CONCAT('%',#{phone},'%')
+         </if>
         limit #{start}, #{size}
     </select>
     <select id="getLostReportTotal" resultType="java.lang.Integer">
@@ -167,6 +244,7 @@
             count(*)
         from t_borrow_return
         where state = 2
+        and is_deleted = 0
     </select>
 
 </mapper>

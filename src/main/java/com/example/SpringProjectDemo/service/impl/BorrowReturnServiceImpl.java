@@ -62,7 +62,7 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
     }
 
     @Override
-    public int queryTotal(BorrowReturnVo borrowReturn) {
+    public Integer queryTotal(BorrowReturnVo borrowReturn) {
         return this.borrowReturnDao.queryTotal(borrowReturn);
     }
 
@@ -101,6 +101,7 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
         //图书借出记录入库
         borrowReturn.setCreateTime(new Date());
         borrowReturn.setState(0);
+        borrowReturn.setIsDeleted(0);
         this.borrowReturnDao.insert(borrowReturn);
         return ResultUtils.ResultSuccessUtilMessage(null,"书籍借阅成功");
     }
@@ -174,6 +175,8 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
             return  ResultUtils.ResultErrorUtil("当前书籍已归还，无法继续操作");
         }
         borrowReturnVo.setState(2);
+        //此处returnTime用作挂失时间
+        borrowReturnVo.setReturnTime(new Date());
         //更新图书借出记录状态
         borrowReturnDao.update(borrowReturnVo);
 
@@ -188,8 +191,12 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
     @Override
     public Response<?> handleLostReport(BorrowReturnVo borrowReturnVo) {
 
+        BorrowReturn borrowReturn = new BorrowReturnVo();
+        borrowReturn.setState(3);
+        borrowReturn.setIsDeleted(1);
+        borrowReturn.setId(borrowReturnVo.getId());
         //将图书借用记录删除
-        borrowReturnDao.deleteById(borrowReturnVo.getId());
+        borrowReturnDao.update(borrowReturn);
 
         return ResultUtils.ResultSuccessUtilMessage(null,"处理成功");
     }
@@ -200,7 +207,7 @@ public class BorrowReturnServiceImpl implements BorrowReturnService {
      * @return
      */
     @Override
-    public List<BorrowReturn> getLostReportList(BorrowReturnVo borrowReturnVo) {
+    public List<BorrowReturnVo> getLostReportList(BorrowReturnVo borrowReturnVo) {
         if(borrowReturnVo.getPage() < 0){
             borrowReturnVo.setPage(0);
         }

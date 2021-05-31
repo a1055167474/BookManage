@@ -102,7 +102,7 @@ public class BorrowReturnController extends BaseController{
             List<BorrowReturnVo> brList = borrowReturnService.queryAllByLimit(borrowReturn);
 
             //查询借用记录总条数
-            int count = borrowReturnService.queryTotal(borrowReturn);
+            Integer count = borrowReturnService.queryTotal(borrowReturn);
             return ResultUtils.ResultSuccessUtilMessage(brList,"查询成功",count);
         }catch (Exception e){
             e.printStackTrace();
@@ -127,7 +127,7 @@ public class BorrowReturnController extends BaseController{
             List<BorrowReturnVo> brList = borrowReturnService.queryAllByLimit(borrowReturn);
 
             //查询借用记录总条数
-            int count = borrowReturnService.queryTotal(borrowReturn);
+            Integer count = borrowReturnService.queryTotal(borrowReturn);
             return ResultUtils.ResultSuccessUtilMessage(brList,"查询成功",count);
 
         }catch (Exception e){
@@ -179,7 +179,7 @@ public class BorrowReturnController extends BaseController{
         }catch (Exception e){
             e.printStackTrace();
         }
-        return ResultUtils.ResultErrorUtil("查询异常");
+        return ResultUtils.ResultErrorUtil("处理异常");
     }
 
     /**
@@ -194,8 +194,12 @@ public class BorrowReturnController extends BaseController{
             if(user == null){
                 return ResultUtils.ResultErrorUtil("未获取当前登录信息");
             }
+            boolean i = isManager(user);
+            if(!i){
+                return ResultUtils.ResultErrorUtil("没有权限");
+            }
             //查询图书挂失数据
-            List<BorrowReturn> brList = borrowReturnService.getLostReportList(borrowReturn);
+            List<BorrowReturnVo> brList = borrowReturnService.getLostReportList(borrowReturn);
             //查询挂失记录总条数
             int count = borrowReturnService.getLostReportTotal(borrowReturn);
             return ResultUtils.ResultSuccessUtilMessage(brList,"查询成功",count);

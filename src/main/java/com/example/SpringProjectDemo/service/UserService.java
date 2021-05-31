@@ -75,4 +75,7 @@ public interface UserService {
      */
     int selectUserCount(UserVo user);
 
+
+    Response<?> deleteUser(User user);
+
 }

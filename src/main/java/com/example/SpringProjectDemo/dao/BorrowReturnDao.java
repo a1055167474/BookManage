@@ -77,7 +77,7 @@ public interface BorrowReturnDao {
      * @param borrowReturn
      * @return
      */
-    int queryTotal(BorrowReturnVo borrowReturn);
+    Integer queryTotal(BorrowReturnVo borrowReturn);
 
 
     /**
@@ -85,7 +85,7 @@ public interface BorrowReturnDao {
      * @param borrowReturnVo
      * @return
      */
-    List<BorrowReturn> getLostReportList(BorrowReturnVo borrowReturnVo);
+    List<BorrowReturnVo> getLostReportList(BorrowReturnVo borrowReturnVo);
 
     /**
      * 获取挂失记录总数
@@ -94,4 +94,10 @@ public interface BorrowReturnDao {
      */
     int getLostReportTotal(BorrowReturnVo borrowReturnVo);
 
+    /**
+     * 根据用户id查询是否有借出或挂失记录未处理
+     * @param userId
+     * @return
+     */
+    List<BorrowReturn> selectByUserId2(@Param("userId") Long userId);
 }

@@ -141,10 +141,7 @@ public class UserController extends BaseController{
             if(user.getId() == null){
                 return ResultUtils.ResultErrorUtil("未获取到用户id");
             }
-
-            userService.deleteById(user.getId());
-
-            return ResultUtils.ResultSuccessUtilMessage(null,"查询用户成功");
+            return userService.deleteUser(user);
 
         }catch (Exception e){
             e.printStackTrace();

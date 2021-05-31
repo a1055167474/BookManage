@@ -37,7 +37,7 @@ public interface BorrowReturnService {
      * @param borrowReturn
      * @return
      */
-    int queryTotal(BorrowReturnVo borrowReturn);
+    Integer queryTotal(BorrowReturnVo borrowReturn);
 
 
     /**
@@ -85,7 +85,7 @@ public interface BorrowReturnService {
      * @param borrowReturnVo
      * @return
      */
-    List<BorrowReturn> getLostReportList(BorrowReturnVo borrowReturnVo);
+    List<BorrowReturnVo> getLostReportList(BorrowReturnVo borrowReturnVo);
 
     /**
      * 获取挂失记录总数

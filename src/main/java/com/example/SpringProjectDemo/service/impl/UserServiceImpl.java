@@ -1,12 +1,15 @@
 package com.example.SpringProjectDemo.service.impl;
 
 import com.example.SpringProjectDemo.common.Response;
+import com.example.SpringProjectDemo.dao.BorrowReturnDao;
 import com.example.SpringProjectDemo.dao.UserDao;
+import com.example.SpringProjectDemo.entity.BorrowReturn;
 import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.entity.vo.UserVo;
 import com.example.SpringProjectDemo.service.UserService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -22,6 +25,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
+
+    @Resource
+    private BorrowReturnDao borrowReturnDao;
 
     /**
      * 通过ID查询单条数据
@@ -61,6 +67,7 @@ public class UserServiceImpl implements UserService {
             return ResultUtils.ResultErrorUtil("此账号已存在！");
         }
         user.setIsDeleted(0);
+        user.setState(0);
         user.setCreateTime(new Date());
         this.userDao.insert(user);
         return ResultUtils.ResultSuccessUtilMessage(null, "新增用户信息成功");
@@ -118,6 +125,19 @@ public class UserServiceImpl implements UserService {
     public int selectUserCount(UserVo user) {
         user.setStart((user.getPage() - 1) * user.getSize());
         return userDao.queryCount(user);
+    }
+
+    @Override
+    public Response<?> deleteUser(User user) {
+        //判断当前用户下是否有图书借出记录或者挂失记录
+        List<BorrowReturn> brList = borrowReturnDao.selectByUserId2(user.getId());
+
+        if(!CollectionUtils.isEmpty(brList)){
+            return ResultUtils.ResultErrorUtil("当前用户下存在未处理的借阅记录，无法删除");
+        }
+        user.setIsDeleted(1);
+        userDao.update(user);
+        return  ResultUtils.ResultSuccessUtilMessage(null,"删除成功");
     }
 
 
