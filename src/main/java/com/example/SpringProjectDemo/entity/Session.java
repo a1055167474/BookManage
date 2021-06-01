@@ -28,6 +28,16 @@ public class Session implements Serializable {
     */
     private Date createTime;
 
+    //session状态是否有效（0-有效 1-无效）
+    private Integer state;
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
 
     public Long getId() {
         return id;

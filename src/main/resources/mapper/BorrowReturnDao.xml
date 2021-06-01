@@ -11,6 +11,7 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
         <result property="returnTime" column="return_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <!--查询单个-->

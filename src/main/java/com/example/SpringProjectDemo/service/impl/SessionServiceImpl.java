@@ -1,11 +1,15 @@
 package com.example.SpringProjectDemo.service.impl;
 
+import com.example.SpringProjectDemo.common.Const;
 import com.example.SpringProjectDemo.entity.Session;
 import com.example.SpringProjectDemo.dao.SessionDao;
 import com.example.SpringProjectDemo.service.SessionService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,29 +34,6 @@ public class SessionServiceImpl implements SessionService {
         return this.sessionDao.queryById(id);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    @Override
-    public List<Session> queryAllByLimit(int offset, int limit) {
-        return this.sessionDao.queryAllByLimit(offset, limit);
-    }
-
-    /**
-     * 新增数据
-     *
-     * @param session 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Session insert(Session session) {
-        this.sessionDao.insert(session);
-        return session;
-    }
 
     /**
      * 修改数据
@@ -80,5 +61,28 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public Session selectBySessionId(String sessionId) {
         return sessionDao.selectBySessionId(sessionId);
+    }
+
+    /**
+     * 查询库中所有有效的session信息,将超期的session置为失效
+     * @return
+     */
+    @Override
+    public int selectAllInvalid() {
+        List<Session> sessionList = sessionDao.selectAllInvalid();
+        List<Long> ids = new ArrayList<>();
+        for(Session s : sessionList){
+            Long d = s.getCreateTime().getTime();
+            Long d2 = new Date().getTime();
+            //判断session信息是否超出规定时间
+            int diffSeconds = (int) ((d2 - d) / 1000);
+            if(diffSeconds > Const.SESSION_OUT_TIME) {
+                ids.add(s.getId());
+            }
+        }
+        if(CollectionUtils.isEmpty(ids)){
+            return 0;
+        }
+        return sessionDao.updateByIds(ids);
     }
 }

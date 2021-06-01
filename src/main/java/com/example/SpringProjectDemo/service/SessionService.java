@@ -20,23 +20,6 @@ public interface SessionService {
     Session queryById(Long id);
 
     /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    List<Session> queryAllByLimit(int offset, int limit);
-
-    /**
-     * 新增数据
-     *
-     * @param session 实例对象
-     * @return 实例对象
-     */
-    Session insert(Session session);
-
-    /**
      * 修改数据
      *
      * @param session 实例对象
@@ -54,4 +37,9 @@ public interface SessionService {
 
     Session selectBySessionId(String sessionId);
 
+    /**
+     * 查询库中所有有效的session信息，并将超期的session置为失效
+     * @return
+     */
+    int selectAllInvalid();
 }

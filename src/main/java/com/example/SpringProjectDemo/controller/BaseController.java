@@ -17,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author chenzihan
@@ -68,18 +69,31 @@ public class BaseController {
                 //判断session信息是否超出规定时间
                 int diffSeconds = (int) ((d2 - d) / 1000);
                 if(diffSeconds > Const.SESSION_OUT_TIME){
-                    //session信息已经失效，清除库中的session信息
-                    sessionService.deleteById(session1.getId());
+                    //session信息已经失效，session的状态置为失效
+                    Session session = new Session();
+                    session.setId(session1.getId());
+                    session.setState(1);
+                    sessionService.update(session);
                     return null;
                 }else {
                     //没有失效，刷新session的时间
                     session1.setCreateTime(new Date());
+                    session1.setState(0);
                     sessionService.update(session1);
                     return session1;
                 }
             }
         }
         return null;
+    }
+
+    /**
+     * 批量将用户session信息置为失效
+     * @param
+     * @return
+     */
+    public int updateSessionToInvalid() {
+        return  sessionService.selectAllInvalid();
     }
 
     //根据请求获取当前登录人

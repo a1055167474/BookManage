@@ -72,4 +72,20 @@ public interface SessionDao {
 
     int deleteBySessionId(@RequestParam("sessionId") String sessionId);
 
+    //通过sessionId修改状态，置为失效
+    int updateBySessionId(Session session);
+
+    /**
+     * 查询库中所有有效的session信息
+     * @return
+     */
+    List<Session> selectAllInvalid();
+
+    /**
+     * 根据id将session置为失效
+     * @param ids
+     * @return
+     */
+    int updateByIds(List<Long> ids);
+
 }

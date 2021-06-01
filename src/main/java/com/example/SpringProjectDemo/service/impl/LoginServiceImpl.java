@@ -61,11 +61,13 @@ public class LoginServiceImpl implements LoginService {
             session2.setCreateTime(new Date());
             session2.setUserId(userId);
             session2.setSessionId(sessionId);
+            session2.setState(0);
             sessionDao.insert(session2);
         }else{
             //session信息不为空，代表登陆过，更新登录信息
             session1.setSessionId(sessionId);
             session1.setCreateTime(new Date());
+            session1.setState(0);
             sessionDao.update(session1);
         }
 
@@ -102,8 +104,11 @@ public class LoginServiceImpl implements LoginService {
                 break;
             }
         }
-        //根据sessionId删除登录信息
-        sessionDao.deleteBySessionId(sessionId);
+        //根据sessionId删除登录信息，将session 的状态置为1
+        Session session1 = new Session();
+        session1.setSessionId(sessionId);
+        session1.setState(1);
+        sessionDao.updateBySessionId(session1);
 
         return ResultUtils.ResultSuccessUtilMessage(null,"退出登录成功");
     }

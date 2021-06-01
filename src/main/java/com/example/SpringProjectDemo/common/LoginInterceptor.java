@@ -24,14 +24,14 @@ public class LoginInterceptor extends BaseController implements HandlerIntercept
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException, ServletException {
 
         logger.info("-------------------开始进行登录拦截-------------------");
+        //将超期session置为失效
+        int i = updateSessionToInvalid();
         Session session = checkLogin(request);
+        logger.info("-------------------将" + i + "个session信息置为失效-------------------");
         if(session == null){
             //未登录，返回码为302，前端进行登录重定向
             response.setStatus(302);
             response.setHeader("redirect","login");
-
-//            response.sendRedirect("http://localhost:8080/#/login");
-//            request.getRequestDispatcher("https://www.baidu.com").forward(request, response);
             return false;
         }
 
