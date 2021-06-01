@@ -40,6 +40,11 @@ public class Book implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createTime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date endTime;
+
     /**
     * 图书状态（0-正常  1-下线   2-其他状态）
     */
@@ -49,6 +54,14 @@ public class Book implements Serializable {
     */
     private Integer isDeleted;
 
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 
     public String getAuthor() {
         return author;

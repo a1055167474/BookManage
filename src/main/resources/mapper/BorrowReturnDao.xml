@@ -61,13 +61,19 @@
                 and br.amount = #{amount}
             </if>
             <if test="createTime != null">
-                and br.create_time = #{createTime}
+                and br.create_time <![CDATA[ >= ]]> #{createTime}
+            </if>
+            <if test="endTime != null">
+                and br.create_time <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="returnTime != null">
+                and br.return_time <![CDATA[ >= ]]> #{returnTime}
+            </if>
+            <if test="returnEndTime != null">
+                and br.return_time <![CDATA[ <= ]]> #{returnEndTime}
             </if>
             <if test="state != null">
                 and br.state = #{state}
-            </if>
-            <if test="returnTime != null">
-                and br.return_time = #{returnTime}
             </if>
             <if test="bookName != null">
                 and b.name LIKE CONCAT('%',#{bookName},'%')
@@ -163,13 +169,19 @@
                 and br.amount = #{amount}
             </if>
             <if test="createTime != null">
-                and br.create_time = #{createTime}
+                and br.create_time <![CDATA[ >= ]]> #{createTime}
+            </if>
+            <if test="endTime != null">
+                and br.create_time <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="returnTime != null">
+                and br.return_time <![CDATA[ >= ]]> #{returnTime}
+            </if>
+            <if test="returnEndTime != null">
+                and br.return_time <![CDATA[ <= ]]> #{returnEndTime}
             </if>
             <if test="state != null">
                 and br.state = #{state}
-            </if>
-            <if test="returnTime != null">
-                and br.return_time = #{returnTime}
             </if>
             <if test="bookName != null">
                 and b.name LIKE CONCAT('%',#{bookName},'%')
@@ -217,14 +229,20 @@
          <if test="amount != null">
              and br.amount = #{amount}
          </if>
-         <if test="createTime != null">
-             and br.create_time = #{createTime}
-         </if>
+        <if test="createTime != null">
+            and br.create_time <![CDATA[ >= ]]> #{createTime}
+        </if>
+        <if test="endTime != null">
+            and br.create_time <![CDATA[ <= ]]> #{endTime}
+        </if>
+        <if test="returnTime != null">
+            and br.return_time <![CDATA[ >= ]]> #{returnTime}
+        </if>
+        <if test="returnEndTime != null">
+            and br.return_time <![CDATA[ <= ]]> #{returnEndTime}
+        </if>
          <if test="state != null">
              and br.state = #{state}
-         </if>
-         <if test="returnTime != null">
-             and br.return_time = #{returnTime}
          </if>
          <if test="bookName != null">
              and b.name LIKE CONCAT('%',#{bookName},'%')
@@ -242,10 +260,51 @@
     </select>
     <select id="getLostReportTotal" resultType="java.lang.Integer">
         select
-            count(*)
-        from t_borrow_return
-        where state = 2
-        and is_deleted = 0
+        count(*)
+        from t_borrow_return br
+        left join t_book b on b.id = br.book_id
+        left join t_user u on u.id = br.user_id
+        where br.state = 2
+        and br.is_deleted = 0
+        <if test="id != null">
+            and br.id = #{id}
+        </if>
+        <if test="userId != null">
+            and br.user_id = #{userId}
+        </if>
+        <if test="bookId != null">
+            and br.book_id = #{bookId}
+        </if>
+        <if test="amount != null">
+            and br.amount = #{amount}
+        </if>
+        <if test="createTime != null">
+            and br.create_time <![CDATA[ >= ]]> #{createTime}
+        </if>
+        <if test="endTime != null">
+            and br.create_time <![CDATA[ <= ]]> #{endTime}
+        </if>
+        <if test="returnTime != null">
+            and br.return_time <![CDATA[ >= ]]> #{returnTime}
+        </if>
+        <if test="returnEndTime != null">
+            and br.return_time <![CDATA[ <= ]]> #{returnEndTime}
+        </if>
+        <if test="state != null">
+            and br.state = #{state}
+        </if>
+        <if test="bookName != null">
+            and b.name LIKE CONCAT('%',#{bookName},'%')
+        </if>
+        <if test="bookAuthor != null">
+            and b.author LIKE CONCAT('%',#{bookAuthor},'%')
+        </if>
+        <if test="userName != null">
+            and u.name LIKE CONCAT('%',#{userName},'%')
+        </if>
+        <if test="phone != null">
+            and u.phone LIKE CONCAT('%',#{phone},'%')
+        </if>
     </select>
 
 </mapper>

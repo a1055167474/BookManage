@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -98,6 +99,14 @@ public class UserController extends BaseController{
 
         try{
 
+            //例如前端传递的是2021-05-19，页面上显示的是2021-05-19，但实际上数据库中存储的可能是2021-05-19 16:00:00
+            //需要对endTime天数加一
+            if(user.getEndTime() != null) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(user.getEndTime());
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                user.setEndTime(c.getTime());
+            }
             List<User> userList =  userService.selectAllUser(user);
 
             //查询用户总数，用于分页

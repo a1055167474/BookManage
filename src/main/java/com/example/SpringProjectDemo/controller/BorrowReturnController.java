@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -97,6 +98,21 @@ public class BorrowReturnController extends BaseController{
     public Response<?> getBorrowList(BorrowReturnVo borrowReturn) {
 
         try{
+
+            //例如前端传递的是2021-05-19，页面上显示的是2021-05-19，但实际上数据库中存储的可能是2021-05-19 16:00:00
+            //需要对endTime天数加一
+            if(borrowReturn.getEndTime() != null) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(borrowReturn.getEndTime());
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                borrowReturn.setEndTime(c.getTime());
+            }
+            if(borrowReturn.getReturnEndTime() != null) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(borrowReturn.getReturnEndTime());
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                borrowReturn.setReturnEndTime(c.getTime());
+            }
 
             //查询图书借用数据
             List<BorrowReturnVo> brList = borrowReturnService.queryAllByLimit(borrowReturn);
@@ -197,6 +213,21 @@ public class BorrowReturnController extends BaseController{
             boolean i = isManager(user);
             if(!i){
                 return ResultUtils.ResultErrorUtil("没有权限");
+            }
+
+            //例如前端传递的是2021-05-19，页面上显示的是2021-05-19，但实际上数据库中存储的可能是2021-05-19 16:00:00
+            //需要对endTime天数加一
+            if(borrowReturn.getEndTime() != null) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(borrowReturn.getEndTime());
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                borrowReturn.setEndTime(c.getTime());
+            }
+            if(borrowReturn.getReturnEndTime() != null) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(borrowReturn.getReturnEndTime());
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                borrowReturn.setReturnEndTime(c.getTime());
             }
             //查询图书挂失数据
             List<BorrowReturnVo> brList = borrowReturnService.getLostReportList(borrowReturn);

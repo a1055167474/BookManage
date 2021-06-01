@@ -53,7 +53,10 @@
                 and amount = #{book.amount}
             </if>
             <if test="book.createTime != null">
-                and create_time = #{book.createTime}
+                and create_time <![CDATA[ >= ]]> #{book.createTime}
+            </if>
+            <if test="book.endTime != null">
+                and create_time <![CDATA[ <= ]]> #{book.endTime}
             </if>
             <if test="book.state != null">
                 and state = #{book.state}
@@ -86,7 +89,10 @@
                 and amount = #{book.amount}
             </if>
             <if test="book.createTime != null">
-                and create_time = #{book.createTime}
+                and create_time <![CDATA[ >= ]]> #{book.createTime}
+            </if>
+            <if test="book.endTime != null">
+                and create_time <![CDATA[ <= ]]> #{book.endTime}
             </if>
             <if test="book.state != null">
                 and state = #{book.state}

@@ -36,6 +36,11 @@ public class BorrowReturn implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createTime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date endTime;
+
     /**
     * 图书状态（0-借出未归还  1-借出已归还  2-挂失  3-挂失已处理）
     */
@@ -47,10 +52,31 @@ public class BorrowReturn implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date returnTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date returnEndTime;
+
     /**
      * 是否删除（0-未删除  1-已删除）
      */
     private Integer isDeleted;
+
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Date getReturnEndTime() {
+        return returnEndTime;
+    }
+
+    public void setReturnEndTime(Date returnEndTime) {
+        this.returnEndTime = returnEndTime;
+    }
 
     public Integer getIsDeleted() {
         return isDeleted;

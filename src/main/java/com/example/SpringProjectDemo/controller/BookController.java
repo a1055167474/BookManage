@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -55,6 +56,15 @@ public class BookController {
             Object pageObject = jsonObject.get("page");
             JSONObject pageJson = JSONObject.parseObject(JSON.toJSONString(pageObject));
             Page page = pageJson.toJavaObject(Page.class);
+
+            //例如前端传递的是2021-05-19，页面上显示的是2021-05-19，但实际上数据库中存储的可能是2021-05-19 16:00:00
+            //需要对endTime天数加一
+            if(book.getEndTime() != null) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(book.getEndTime());
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                book.setEndTime(c.getTime());
+            }
 
             //分页查询图书列表
             List<Book> bookList =  bookService.selectAllBook(book, page);
