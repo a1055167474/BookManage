@@ -112,6 +112,12 @@
             #{item}
         </foreach>
     </select>
+    <select id="selectAll" resultType="com.example.SpringProjectDemo.entity.Book">
+        select id, name, author, description, amount, create_time, state, is_deleted
+        from t_book
+        where is_deleted = 0
+        and state = 0
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">

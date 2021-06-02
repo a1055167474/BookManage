@@ -72,4 +72,10 @@ public interface BookDao {
      */
     List<Book> getInfoByIds(@Param("bookIds") List<Long> bookIds);
 
+
+    /**
+     * 查询图书种数和总量
+     * @return
+     */
+    List<Book> selectAll();
 }

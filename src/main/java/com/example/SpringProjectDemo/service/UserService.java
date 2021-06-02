@@ -1,5 +1,6 @@
 package com.example.SpringProjectDemo.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.entity.vo.UserVo;
@@ -83,4 +84,22 @@ public interface UserService {
      */
     Response<?> deleteUser(User user);
 
+
+    /**
+     * 近一周每日登陆人数
+     *
+     */
+    JSONObject getWeekUserLogin();
+
+    /**
+     * 获取当前登录人数
+     * @return
+     */
+    JSONObject getLoginCount();
+
+    /**
+     * 查询用户总数、普通用户、管理员数量
+     *
+     */
+    JSONObject getUserCount();
 }

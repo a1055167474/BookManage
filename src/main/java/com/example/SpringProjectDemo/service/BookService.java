@@ -1,5 +1,6 @@
 package com.example.SpringProjectDemo.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.SpringProjectDemo.entity.Book;
 import com.example.SpringProjectDemo.entity.Page;
 
@@ -65,4 +66,15 @@ public interface BookService {
      */
     int selectAllBookCount(Book book);
 
+    /**
+     * 查询图书排行前5的图书信息
+     * @return
+     */
+    JSONObject getBookTopFive();
+
+    /**
+     * 查询图书总量和种数
+     * @return
+     */
+    JSONObject getBookCount();
 }

@@ -1,10 +1,15 @@
 package com.example.SpringProjectDemo.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.example.SpringProjectDemo.common.Const;
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.dao.BorrowReturnDao;
+import com.example.SpringProjectDemo.dao.SessionDao;
 import com.example.SpringProjectDemo.dao.UserDao;
 import com.example.SpringProjectDemo.entity.BorrowReturn;
+import com.example.SpringProjectDemo.entity.Session;
 import com.example.SpringProjectDemo.entity.User;
+import com.example.SpringProjectDemo.entity.vo.SessionVo;
 import com.example.SpringProjectDemo.entity.vo.UserVo;
 import com.example.SpringProjectDemo.service.UserService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
@@ -12,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private BorrowReturnDao borrowReturnDao;
+
+    @Resource
+    private SessionDao sessionDao;
 
     /**
      * 通过ID查询单条数据
@@ -138,6 +149,77 @@ public class UserServiceImpl implements UserService {
         user.setIsDeleted(1);
         userDao.update(user);
         return  ResultUtils.ResultSuccessUtilMessage(null,"删除成功");
+    }
+
+    /**
+     * 近一周每日登陆人数
+     *
+     */
+    @Override
+    public JSONObject getWeekUserLogin() {
+        JSONObject j = new JSONObject();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
+        //获取近一周的每日登录人数，包含今天
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.DATE, - 6);
+        List<SessionVo> sessionList = sessionDao.selectWeekDate();
+
+        List<String> weekDate = new ArrayList<>();
+        List<Integer> count = new ArrayList<>();
+        //将日期和数量分开成两个列表以匹配前端组件
+        for(SessionVo s : sessionList){
+            weekDate.add(sdf.format(s.getWeekDate()));
+            count.add(s.getCount());
+        }
+        j.put("weekDate",weekDate);
+        j.put("count",count);
+        return j;
+    }
+
+    @Override
+    public JSONObject getLoginCount() {
+
+        JSONObject j = new JSONObject();
+        List<Session> sessionList = sessionDao.selectAllInvalid();
+        List<Long> ids = new ArrayList<>();
+        for(Session s : sessionList){
+            Long d = s.getCreateTime().getTime();
+            Long d2 = new Date().getTime();
+            //判断session信息是否超出规定时间
+            int diffSeconds = (int) ((d2 - d) / 1000);
+            if(diffSeconds <= Const.SESSION_OUT_TIME) {
+                ids.add(s.getId());
+            }
+        }
+        j.put("count",ids.size());
+        return j;
+    }
+
+    /**
+     * 查询用户总数、普通用户、管理员数量
+     *
+     */
+    @Override
+    public JSONObject getUserCount() {
+        JSONObject j = new JSONObject();
+        int allCount = 0;  //用户总数
+        int user = 0;  //普通用户
+        int manager = 0;  //管理员
+        List<User> userList = userDao.selectAll();
+        allCount = userList.size();
+        for(User u : userList){
+            if(u.getUserRole() == 0){
+                user++;
+            }
+            if(u.getUserRole() == 1){
+                manager++;
+            }
+        }
+        j.put("allCount",allCount);
+        j.put("user",user);
+        j.put("manager",manager);
+        return j;
     }
 
 

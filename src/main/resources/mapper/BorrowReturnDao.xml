@@ -308,4 +308,17 @@
         </if>
     </select>
 
+    <select id="getBookTopFive" resultType="com.example.SpringProjectDemo.entity.vo.BorrowReturnVo">
+        SELECT
+            br.book_id as bookId,
+            b.author as bookAuthor,
+            b.`name` as bookName,
+            count(br.book_id) as 'count'
+        FROM t_borrow_return br
+                 LEFT JOIN t_book b on br.book_id = b.id
+        GROUP BY book_id
+        ORDER BY count desc
+        LIMIT 5
+    </select>
+
 </mapper>

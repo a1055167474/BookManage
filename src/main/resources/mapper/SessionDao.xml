@@ -91,4 +91,30 @@
         </foreach>
     </update>
 
+    <select id="selectWeekDate" resultType="com.example.SpringProjectDemo.entity.vo.SessionVo">
+        select
+            a.weekDate,
+            ifnull(b.count,0) as count
+        from (
+                 SELECT curdate() as weekDate
+                 union all
+                 SELECT date_sub(curdate(), interval 1 day) as weekDate
+                 union all
+                 SELECT date_sub(curdate(), interval 2 day) as weekDate
+                 union all
+                 SELECT date_sub(curdate(), interval 3 day) as weekDate
+                 union all
+                 SELECT date_sub(curdate(), interval 4 day) as weekDate
+                 union all
+                 SELECT date_sub(curdate(), interval 5 day) as weekDate
+                 union all
+                 SELECT date_sub(curdate(), interval 6 day) as weekDate
+             ) a
+                 left join (
+            select  date_format(create_time,'%Y-%m-%d') as datetime, count(*) as count
+            from t_session
+            group by date_format(create_time,'%Y-%m-%d')) b on a.weekDate = b.datetime
+        ORDER BY weekDate asc
+    </select>
+
 </mapper>

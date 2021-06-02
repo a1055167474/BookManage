@@ -1,6 +1,8 @@
 package com.example.SpringProjectDemo.dao;
 
+import com.example.SpringProjectDemo.entity.Session;
 import com.example.SpringProjectDemo.entity.User;
+import com.example.SpringProjectDemo.entity.vo.SessionVo;
 import com.example.SpringProjectDemo.entity.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
@@ -83,4 +85,11 @@ public interface UserDao {
      * @return
      */
     List<User> getInfoByIds(@Param("userIds") List<Long> userIds);
+
+
+    /**
+     * 查询所有用户信息
+     * @return
+     */
+    List<User> selectAll();
 }

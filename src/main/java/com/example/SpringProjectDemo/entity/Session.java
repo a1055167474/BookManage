@@ -1,5 +1,8 @@
 package com.example.SpringProjectDemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -26,6 +29,8 @@ public class Session implements Serializable {
     /**
     * session创建时间
     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createTime;
 
     //session状态是否有效（0-有效 1-无效）

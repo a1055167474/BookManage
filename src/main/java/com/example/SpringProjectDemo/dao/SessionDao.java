@@ -1,6 +1,7 @@
 package com.example.SpringProjectDemo.dao;
 
 import com.example.SpringProjectDemo.entity.Session;
+import com.example.SpringProjectDemo.entity.vo.SessionVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -86,6 +87,13 @@ public interface SessionDao {
      * @param ids
      * @return
      */
-    int updateByIds(List<Long> ids);
+    int updateByIds(@Param("ids") List<Long> ids);
+
+    /**
+     * 查询近一周每天的登录人数
+     * @return
+     */
+    List<SessionVo> selectWeekDate();
+
 
 }

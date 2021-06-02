@@ -170,4 +170,10 @@
         </foreach>
     </select>
 
+    <select id="selectAll" resultType="com.example.SpringProjectDemo.entity.User">
+        select
+        id, account, name, password, phone, user_role, create_time, state, is_deleted
+        from t_user
+        where is_deleted = 0
+    </select>
 </mapper>

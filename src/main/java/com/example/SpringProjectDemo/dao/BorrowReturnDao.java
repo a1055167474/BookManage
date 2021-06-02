@@ -100,4 +100,12 @@ public interface BorrowReturnDao {
      * @return
      */
     List<BorrowReturn> selectByUserId2(@Param("userId") Long userId);
+
+    /**
+     * 查询图书排行前5的图书信息
+     * @return
+     */
+    List<BorrowReturnVo> getBookTopFive();
+
+
 }

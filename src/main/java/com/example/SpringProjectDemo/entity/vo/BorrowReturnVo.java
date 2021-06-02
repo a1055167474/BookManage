@@ -29,6 +29,17 @@ public class BorrowReturnVo extends BorrowReturn {
 
     private int start;
 
+    //借阅数量（用于图书借阅排行榜）
+    private Integer count;
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     public String getUserName() {
         return userName;
     }
