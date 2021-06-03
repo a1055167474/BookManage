@@ -5,7 +5,6 @@ import com.example.SpringProjectDemo.dao.BorrowReturnDao;
 import com.example.SpringProjectDemo.entity.Book;
 import com.example.SpringProjectDemo.dao.BookDao;
 import com.example.SpringProjectDemo.entity.Page;
-import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.entity.vo.BorrowReturnVo;
 import com.example.SpringProjectDemo.service.BookService;
 import org.springframework.stereotype.Service;

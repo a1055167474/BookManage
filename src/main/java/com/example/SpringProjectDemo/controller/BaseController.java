@@ -1,10 +1,8 @@
 package com.example.SpringProjectDemo.controller;
 
 import com.example.SpringProjectDemo.common.Const;
-import com.example.SpringProjectDemo.dao.SessionDao;
 import com.example.SpringProjectDemo.entity.Session;
 import com.example.SpringProjectDemo.entity.User;
-import com.example.SpringProjectDemo.service.LoginService;
 import com.example.SpringProjectDemo.service.SessionService;
 import com.example.SpringProjectDemo.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +15,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author chenzihan

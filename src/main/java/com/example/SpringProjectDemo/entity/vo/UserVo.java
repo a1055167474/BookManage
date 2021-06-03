@@ -8,9 +8,9 @@ import javax.xml.crypto.Data;
 import java.util.Date;
 
 /**
- * @author qinzhibin
+ * @author chenzihan
  * @description
- * @date 2021/5/24
+ * @date 2021/3/24
  */
 public class UserVo extends User {
 

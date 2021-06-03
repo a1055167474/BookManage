@@ -27,7 +27,7 @@ public class LoginInterceptor extends BaseController implements HandlerIntercept
         //将超期session置为失效
         int i = updateSessionToInvalid();
         Session session = checkLogin(request);
-        logger.info("-------------------将" + i + "个session信息置为失效-------------------");
+//        logger.info("-------------------将" + i + "个session信息置为失效-------------------");
         if(session == null){
             //未登录，返回码为302，前端进行登录重定向
             response.setStatus(302);

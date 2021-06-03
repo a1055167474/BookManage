@@ -118,8 +118,8 @@ public class UserServiceImpl implements UserService {
     /**
      * @Description: 根据条件查询用户信息
      * @Param:
-     * @Author: qinzhibin
-     * @Date: 2021/5/17
+     * @Author: chenzihan
+     * @Date: 2021/3/17
      */
     @Override
     public List<User> selectAllUser(UserVo user) {

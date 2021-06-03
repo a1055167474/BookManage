@@ -6,9 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.Serializable;
 
 /**
- * @author qinzhibin
+ * @author chenzihan
  * @description 分页信息实体类
- * @date 2021/5/24
+ * @date 2021/3/24
  */
 public class Page implements Serializable {
 

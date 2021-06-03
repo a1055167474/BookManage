@@ -4,16 +4,11 @@ package com.example.SpringProjectDemo.controller;
 import com.example.SpringProjectDemo.common.Response;
 import com.example.SpringProjectDemo.entity.User;
 import com.example.SpringProjectDemo.service.LoginService;
-import com.example.SpringProjectDemo.service.SessionService;
 import com.example.SpringProjectDemo.utils.ResultUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;

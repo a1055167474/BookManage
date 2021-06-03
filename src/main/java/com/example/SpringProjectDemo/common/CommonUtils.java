@@ -4,9 +4,9 @@ import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author qinzhibin
+ * @author chenzihan
  * @description 公共方法类
- * @date 2021/5/24
+ * @date 2021/3/24
  */
 public class CommonUtils {
 
